@@ -1,0 +1,149 @@
+/* * {
+  box-sizing: border-box;
+} */
+
+html,
+body {
+  padding: 0;
+  margin: 0;
+  height: 100%;
+}
+* {
+  font-family: Arial, Helvetica, sans-serif;
+  color: #fff;
+}
+#nowPlayingBarContainer {
+  width: 100%;
+  bottom: 0;
+  position: fixed;
+  background-color: #000;
+  min-width: 620px;
+}
+#nowPlayingBar {
+  display: flex;
+  padding: 16px;
+  height: 90px;
+  box-sizing: border-box;
+}
+#nowPlayingLeft,
+#nowPlayingRight {
+  width: 30%;
+  min-width: 180px;
+}
+#nowPlayingRight {
+  position: relative;
+  margin-top: 20px;
+}
+#nowPlayingCenter {
+  width: 40%;
+  max-width: 700px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+#nowPlayingBar .content {
+  width: 100%;
+  height: 57px;
+}
+.playerControls .buttons {
+  margin: 0 auto;
+  display: table;
+}
+
+/* 撥放器控制按鈕 */
+.controlBtn {
+  background-color: transparent;
+  border: none;
+
+  /* 用來對齊大小不一樣的按鈕 */
+  vertical-align: middle;
+}
+.controlBtn img {
+  width: 20px;
+  height: 20px;
+}
+.controlBtn.play img,
+.controlBtn.pause img {
+  width: 32px;
+  height: 32px;
+}
+.controlBtn:hover {
+  cursor: pointer;
+}
+
+/* 撥放器時間軸 */
+.progressTime {
+  color: #a0a0a0;
+  font-size: 11px;
+  min-width: 40px;
+  text-align: center;
+}
+
+.playbackBar {
+  display: flex;
+}
+
+.progressBar {
+  width: 100%;
+  height: 12px;
+  display: inline-flex;
+  cursor: pointer;
+}
+/* 時間軸外觀 */
+.progressBarBg {
+  background-color: #404040;
+  height: 4px;
+  width: 100%;
+  border-radius: 2px;
+}
+/* 進度條外觀 */
+.progress {
+  background-color: #a0a0a0;
+  height: 4px;
+  width: 0;
+  border-radius: 2px;
+}
+
+.playbackBar .progressBar {
+  margin-top: 4px;
+}
+.albumLink img {
+  height: 100%;
+  width: 100%;
+  max-width: 57px;
+  margin-right: 15px;
+  float: left;
+  background-size: cover;
+}
+#nowPlayingLeft .trackInfo {
+  display: table;
+}
+#nowPlayingLeft .trackInfo .trackName {
+  margin: 6px 0;
+  display: inline-block;
+  width: 100%;
+}
+#nowPlayingLeft .trackInfo .artisName span {
+  font-size: 12px;
+  color: #a0a0a0;
+}
+.volumeBar {
+  width: 180px;
+  position: absolute;
+  right: 0;
+}
+.volumeBar .progressBar {
+  width: 125px;
+}
+#topContainer {
+  min-height: 100%;
+  width: 100%;
+}
+#navBarContainer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: #000;
+  width: 220px;
+  height: 100vh;
+}
