@@ -153,20 +153,39 @@ body {
   flex-direction: column;
   -ms-flex-direction: column;
 }
+.logo {
+  margin-bottom: 15px;
+}
 .logo img {
   width: 32px;
 }
+
 .navBar .group {
   border-top: 1px solid #a0a0a0;
   padding: 10px 0;
 }
 .navItem {
   padding: 7px;
-  font-size: 16px;
+  font-size: 14px;
   font-weight: 700;
   display: block;
   letter-spacing: 1px;
+  position: relative;
 }
-.navItem a {
+.navItemLink {
+  color: #a0a0a0;
   text-decoration: none;
+}
+.navItemLink {
+  color: #a0a0a0;
+  text-decoration: none;
+}
+.navItemLink:hover {
+  color: #fff;
+}
+.navItemLink .icon {
+  position: absolute;
+  right: 0;
+  top: 3px;
+  width: 25px;
 }
