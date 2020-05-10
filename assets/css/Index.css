@@ -11,6 +11,12 @@ body {
 * {
   font-family: Arial, Helvetica, sans-serif;
   color: #fff;
+  letter-spacing: 1px;
+}
+body {
+  background-color: #181818;
+  font-size: 14px;
+  min-width: 720px;
 }
 #nowPlayingBarContainer {
   width: 100%;
@@ -188,4 +194,47 @@ body {
   right: 0;
   top: 3px;
   width: 25px;
+}
+#mainViewContainer {
+  margin-left: 220px;
+  padding-bottom: 90px;
+  width: calc(100%-220px);
+}
+#mainContent {
+  padding: 0 20px;
+}
+.pageHeadingBig {
+  padding: 20px;
+  text-align: center;
+}
+.gridViewItem {
+  display: inline-block;
+  margin-right: 20px;
+  width: 29%;
+  max-width: 200px;
+  min-width: 150px;
+  margin-bottom: 20px;
+}
+.gridViewItem img {
+  width: 100%;
+}
+.gridViewInfo {
+  color: #a0a0a0;
+  font-weight: 300;
+  text-align: center;
+  padding: 5px 0;
+
+  /* 將被顯示限制的內容以 . . . 替代 */
+  text-overflow: ellipsis;
+  overflow: hidden;
+
+  /* 強制文字不換行  */
+  white-space: nowrap;
+}
+.gridViewInfo:hover {
+  transition: 0.5s;
+  color: #fff;
+}
+.gridViewItem a {
+  text-decoration: none;
 }
