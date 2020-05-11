@@ -1,3 +1,27 @@
+<?php
+$songQuery = mysqli_query($conn, "SELECT * FROM songs ORDER BY RAND() LIMIT 10");
+$resultArray = array(); //create array
+while ($row = mysqli_fetch_array($songQuery)) {
+    array_push($resultArray, $row['id']);
+}
+
+$jsonArray = json_encode($resultArray);
+
+?>
+<script>
+    $(function() {
+        currentPlaylist = <?php echo $jsonArray  ?>;
+        audioElement = new Audio();
+        setTrack(currentPlaylist[0], currentPlaylist, true);
+    })
+
+    function setTrack(trackId, newPlaylist, play) {
+        audioElement.setTrack("assets/music/bensound-acousticbreeze.mp3");
+        if (play == true) {
+            audioElement.play();
+        }
+    }
+</script>
 <div id="nowPlayingBarContainer">
     <!-- 音樂撥放器 -->
     <div id="nowPlayingBar">

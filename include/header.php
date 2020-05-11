@@ -22,15 +22,16 @@ if (isset($_SESSION['userLoggedIn'])) {
 
     <link rel="stylesheet" href="assets/css/style.css" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.js"></script>
-
+    <script src="assets/js/script.js"></script>
     <title>YouthSound</title>
-    <style></style>
+
 </head>
 
 <body>
-    <div id="mainContainer">
-        <div id="topContainer">
-            <?php include("include/navBarContainer.php"); ?>
 
-            <div id="mainViewContainer">
-                <div id="mainContent">
+    <div id="mainContainer">
+        <div id="topContainer"></div>
+        <?php include("include/navBarContainer.php"); ?>
+
+        <div id="mainViewContainer">
+            <div id="mainContent">
