@@ -10,17 +10,36 @@ $jsonArray = json_encode($resultArray);
 ?>
 <script>
     $(function() {
-        currentPlaylist = <?php echo $jsonArray  ?>;
+        currentPlaylist = <?php echo $jsonArray ?>;
         audioElement = new Audio();
         setTrack(currentPlaylist[0], currentPlaylist, true);
     })
 
+    //取得播放清單  賦予 撥放器功能
     function setTrack(trackId, newPlaylist, play) {
-        audioElement.setTrack("assets/music/bensound-acousticbreeze.mp3");
+
+        //取得音檔位置來播放
+        // audioElement.setTrack("");
+        // $.post("URL ",{songId : trackId}, function(data){ } );
+        $.post("include/handler/ajax/getSongJson.php",{songId : trackId}, function(data){
+            audioElement.setTrack(data.src);
+        } );
+
         if (play == true) {
             audioElement.play();
         }
     }
+    function playSong(){
+        $(".controlBtn.play").hide();
+        $(".controlBtn.pause").show();
+        audioElement.play();
+    }
+    function pauseSong(){
+        $(".controlBtn.pause").hide();
+        $(".controlBtn.play").show();
+        audioElement.pause();
+    }
+
 </script>
 <div id="nowPlayingBarContainer">
     <!-- 音樂撥放器 -->
@@ -55,10 +74,10 @@ $jsonArray = json_encode($resultArray);
                     <button class="controlBtn previous" title="Previous button">
                         <img src="assets/images/icons/previous.png" alt="PreviousBtn" />
                     </button>
-                    <button class="controlBtn play" title="Play button">
+                    <button class="controlBtn play" title="Play button" onclick="playSong()">
                         <img src="assets/images/icons/play.png" alt="PlayBtn" />
                     </button>
-                    <button class="controlBtn pause" title="Pause button" style="display: none;">
+                    <button class="controlBtn pause" title="Pause button" onclick="pauseSong()"style="display: none;">
                         <img src="assets/images/icons/pause.png" alt="PauseBtn" />
                     </button>
                     <button class="controlBtn next" title="Next button">
