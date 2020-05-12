@@ -78,13 +78,12 @@ $jsonArray = json_encode($resultArray);
         audioElement.pause();
     }
     //取得撥放器目前音量
-    function safe_volume() {
-        var safe_current_volume
+    function get_volume() {
+        var get_current_volume
         //儲存目前音量
-        safe_current_volume = audioElement.audio.volume;
-        console.log(safe_current_volume);
-        return safe_current_volume;
-    }
+        get_current_volume = audioElement.audio.volume;
+        console.log(get_current_volume);}
+
     //撥放器靜音
     function mutedSong() {
         $(".controlBtn.volume > #no_muted").hide();
@@ -107,7 +106,7 @@ $jsonArray = json_encode($resultArray);
         <div id="nowPlayingLeft">
             <div class="content">
                 <!-- 專輯圖片 -->
-                <span class="albumLink"><img src="https://picsum.photos/800/800" alt="" /></span>
+                <span class="albumLink"><img src="" alt="" /></span>
 
                 <!-- 歌名 -->
                 <div class="trackInfo">
@@ -164,7 +163,7 @@ $jsonArray = json_encode($resultArray);
             <div class="volumeBar">
                 <button class="controlBtn volume" title="Volume Btn
         ">
-                    <img src="assets/images/icons/volume.png" alt="VolumeBtn" id="no_muted" onclick="safe_volume();mutedSong();" />
+                    <img src="assets/images/icons/volume.png" alt="VolumeBtn" id="no_muted" onclick="get_volume();mutedSong();" />
 
                     <img src="assets/images/icons/volume-mute.png" alt="MutedBtn" id="muted" onclick="no_mutedSong()" style="display: none" />
                 </button>
