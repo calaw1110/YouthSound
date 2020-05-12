@@ -10,9 +10,11 @@ $jsonArray = json_encode($resultArray);
 ?>
 <script>
     $(function() {
-        currentPlaylist = <?php echo $jsonArray ?>;
+        currentPlaylist = <?php echo $jsonArray; ?>;
         audioElement = new Audio();
-        setTrack(currentPlaylist[0], currentPlaylist, true);
+        audioElement.setAttribute();
+
+        setTrack(currentPlaylist[0], currentPlaylist, false);
     })
 
     //取得播放清單  賦予 撥放器功能
@@ -21,25 +23,82 @@ $jsonArray = json_encode($resultArray);
         //取得音檔位置來播放
         // audioElement.setTrack("");
         // $.post("URL ",{songId : trackId}, function(data){ } );
-        $.post("include/handler/ajax/getSongJson.php",{songId : trackId}, function(data){
-            audioElement.setTrack(data.src);
-        } );
+        $.post("include/handler/ajax/getSongJson.php", {
+            songId: trackId
+        }, function(data) {
+            // JSON.parse 將傳進來的json格式資料轉換成js 物件形式
+            var track = JSON.parse(data);
+            console.log(track);
+            //取得歌曲名稱
+            $(".trackName span").text(track.title);
+
+            //ajax取得演唱者名稱
+            $.post("include/handler/ajax/getArtistJson.php", {
+                artistId: track.artist
+            }, function(data) {
+                //轉JSON格式
+                var artist = JSON.parse(data);
+                //check data
+                console.log(artist);
+                //將歌手名字傳進撥放器
+                $(".artisName span").text(artist.name)
+            });
+
+            //取得專輯資訊
+            $.post("include/handler/ajax/getAlbumJson.php", {
+                albumId: track.album
+            }, function(data) {
+                //將專輯資訊轉換成JSON格式
+                var album = JSON.parse(data);
+                //check data
+                console.log(album);
+                //將專輯圖片傳入撥放器
+                $(".albumLink img").attr("src", album.artworkPath);
+            });
+            audioElement.setTrack(track.src);
+            audioElement.play();
+        });
 
         if (play == true) {
             audioElement.play();
         }
     }
-    function playSong(){
+
+    function playSong() {
+
+
         $(".controlBtn.play").hide();
         $(".controlBtn.pause").show();
         audioElement.play();
     }
-    function pauseSong(){
+
+    function pauseSong() {
         $(".controlBtn.pause").hide();
         $(".controlBtn.play").show();
         audioElement.pause();
     }
-
+    //取得撥放器目前音量
+    function safe_volume() {
+        var safe_current_volume
+        //儲存目前音量
+        safe_current_volume = audioElement.audio.volume;
+        console.log(safe_current_volume);
+        return safe_current_volume;
+    }
+    //撥放器靜音
+    function mutedSong() {
+        $(".controlBtn.volume > #no_muted").hide();
+        $(".controlBtn.volume > #muted").show();
+        //將撥放器音量設為0
+        audioElement.audio.volume = false;
+    }
+    // 取消播器靜音
+    function no_mutedSong() {
+        $(".controlBtn.volume > #muted").hide();
+        $(".controlBtn.volume > #no_muted").show();
+        //將撥放器音量設為1  = 100%
+        audioElement.audio.volume = true;
+    }
 </script>
 <div id="nowPlayingBarContainer">
     <!-- 音樂撥放器 -->
@@ -54,11 +113,11 @@ $jsonArray = json_encode($resultArray);
                 <div class="trackInfo">
                     <span class="trackName">
                         <!-- name of song -->
-                        <span>123</span>
+                        <span></span>
                     </span>
                     <!-- 演唱者 -->
                     <span class="artisName">
-                        <span>Abc Rdf</span>
+                        <span></span>
                     </span>
                 </div>
             </div>
@@ -77,7 +136,7 @@ $jsonArray = json_encode($resultArray);
                     <button class="controlBtn play" title="Play button" onclick="playSong()">
                         <img src="assets/images/icons/play.png" alt="PlayBtn" />
                     </button>
-                    <button class="controlBtn pause" title="Pause button" onclick="pauseSong()"style="display: none;">
+                    <button class="controlBtn pause" title="Pause button" onclick="pauseSong()" style="display: none;">
                         <img src="assets/images/icons/pause.png" alt="PauseBtn" />
                     </button>
                     <button class="controlBtn next" title="Next button">
@@ -105,7 +164,9 @@ $jsonArray = json_encode($resultArray);
             <div class="volumeBar">
                 <button class="controlBtn volume" title="Volume Btn
         ">
-                    <img src="assets/images/icons/volume.png" alt="VolumeBtn" />
+                    <img src="assets/images/icons/volume.png" alt="VolumeBtn" id="no_muted" onclick="safe_volume();mutedSong();" />
+
+                    <img src="assets/images/icons/volume-mute.png" alt="MutedBtn" id="muted" onclick="no_mutedSong()" style="display: none" />
                 </button>
                 <div class="progressBar">
                     <div class="progressBarBg">
