@@ -11,7 +11,7 @@ class Song
     private $albumId;
     private $genre;
     private $duration;
-    private $path;
+    private $src;
 
     public function __construct($conn, $id)
     {
@@ -27,7 +27,7 @@ class Song
         $this->albumId = $this->mysqliData['album'];
         $this->genre = $this->mysqliData['genre'];
         $this->duration = $this->mysqliData['duration'];
-        $this->path = $this->mysqliData['path'];
+        $this->src = $this->mysqliData['src'];
     }
     public function getSongTitle()
     {
@@ -41,9 +41,9 @@ class Song
     {
         return new Album($this->conn, $this->albumId);
     }
-    public function getSongPath()
+    public function getSongSrc()
     {
-        return $this->path;
+        return $this->src;
     }
     public function getSongDuration()
     {
