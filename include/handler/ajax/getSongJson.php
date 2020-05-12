@@ -1,4 +1,5 @@
 <?php
+// ajax 非同步請求歌單
 include "../../config.php";
 if (isset($_POST['songId'])) {
     $songId = $_POST['songId'];
