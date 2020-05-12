@@ -14,4 +14,8 @@ function Audio(){
     this.pause= function(){
         this.audio.pause();
     }
+
+    this.setAttribute=function(){
+        this.audio.setAttribute('crossorigin', 'anonymous');
+    }
 }
