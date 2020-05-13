@@ -12,12 +12,60 @@ $jsonArray = json_encode($resultArray);
         currentPlaylist = <?php echo $jsonArray; ?>;
         audioElement = new Audio();
         // audioElement.setAttribute();
-
         setTrack(currentPlaylist[0], currentPlaylist, false);
-    })
+        //預設音量條
+        updateVolumeProgressBar(audioElement.audio);
+       //處理時間軸拖拉
+        //滑鼠按下事件
+        $('.playbackBar .progressBar').mousedown(function(){
+            mouseDown = true;
+        })
+        //e 指的是事件   mousemove 滑鼠移動事件
+        $('.playbackBar .progressBar').mousemove(function(e){
+            if(mouseDown == true){
+                //依據滑鼠拉的長度 來改變撥放時間
+                timeFromOffest(e,this);
+                //this = .playbackBar .progressBar
+            }
+        })
+        //滑鼠放開事件
+        $('.playbackBar .progressBar').mouseup(function(e){
+            timeFromOffest(e,this);
+               //this = .playbackBar .progressBar
+        })
 
-    //取得播放清單  賦予 撥放器功能
-    function setTrack(trackId, newPlaylist, play) {
+        //處理拖拉音量軸
+        $('.volumeBar .progressBar').mousedown(function(){
+            mouseDown = true;
+        })
+        //e 指的是事件   mousemove 滑鼠移動事件
+        $('.volumeBar .progressBar').mousemove(function(e){
+            if(mouseDown == true){
+
+                var percentage = e.offsetX /$(this).width();
+                if(percentage >=0 && percentage<=1){
+                    audioElement.audio.volume = percentage}
+            }
+        })
+        //滑鼠放開事件
+        $('.volumeBar .progressBar').mouseup(function(e){
+            var percentage = e.offsetX /$(this).width();
+            audioElement.audio.volume = percentage
+        })
+        $(document).mouseup(function(){
+            mouseDown = false;
+        })
+})
+function timeFromOffest(mouse,progressBar){
+    //取得拖拉移動的變化量
+    var percentage = mouse.offsetX / $(progressBar).width() * 100;
+    //根據變化量去計算對應的時間
+    var seconds = audioElement.audio.duration * (percentage/100);
+   //呼叫function 來更改 目前撥放時間
+    audioElement.setTime(seconds)
+}
+//取得播放清單  賦予 撥放器功能
+function setTrack(trackId, newPlaylist, play) {
 
         //取得音檔位置來播放
         // audioElement.setTrack("");
@@ -27,8 +75,9 @@ $jsonArray = json_encode($resultArray);
         }, function(data) {
             // JSON.parse 將傳進來的json格式資料轉換成js 物件形式
             var track = JSON.parse(data);
-            console.log("nowPlayingBarContainer 裡的測試");
-            console.log(track);
+            // console.log("nowPlayingBarContainer 裡的測試");
+            //data test
+            // console.log(track);
             //取得歌曲名稱
             $(".trackName span").text(track.title);
 
@@ -39,7 +88,8 @@ $jsonArray = json_encode($resultArray);
                 //轉JSON格式
                 var artist = JSON.parse(data);
                 //check data
-                console.log(artist);
+                // console.log(artist);
+
                 //將歌手名字傳進撥放器
                 $(".artisName span").text(artist.name)
             });
@@ -51,8 +101,8 @@ $jsonArray = json_encode($resultArray);
                 //將專輯資訊轉換成JSON格式
                 var album = JSON.parse(data);
                 //check data
-                console.log(album);
-                console.log("nowPlayingBarContainer 裡的測試 結束");
+                // console.log(album);
+                // console.log("nowPlayingBarContainer 裡的測試 結束");
                 //將專輯圖片傳入撥放器
                 $(".albumLink img").attr("src", album.artworkPath);
             });
@@ -83,24 +133,6 @@ $jsonArray = json_encode($resultArray);
         $(".controlBtn.pause").hide();
         $(".controlBtn.play").show();
         audioElement.pause();
-    }
-    //取得撥放器目前音量
-
-
-
-    //撥放器靜音
-    function mutedSong() {
-        $(".controlBtn.volume > #no_muted").hide();
-        $(".controlBtn.volume > #muted").show();
-        //將撥放器音量設為0
-        audioElement.audio.volume = false;
-    }
-    // 取消播器靜音
-    function no_mutedSong() {
-        $(".controlBtn.volume > #muted").hide();
-        $(".controlBtn.volume > #no_muted").show();
-        //將撥放器音量設為1  = 100%
-        audioElement.audio.volume = true;
     }
 </script>
 <div id="nowPlayingBarContainer">
@@ -152,28 +184,29 @@ $jsonArray = json_encode($resultArray);
                 <!-- 撥放器時間軸 -->
                 <div class="playbackBar">
                     <!-- 目前時間 -->
-                    <span class="progressTime current">0.00</span>
+                    <span class="progressTime current">0:00</span>
                     <div class="progressBar">
                         <div class="progressBarBg">
-                            <div class="progress"></div>
+                            <div class="progress"id="timeBar"></div>
                         </div>
                     </div>
-                    <!-- 剩餘時間 -->
-                    <span class="progressTime remaining">0.00</span>
+                    <!-- 剩餘時間 or 總時間 -->
+                    <span class="progressTime remaining">0:00</span>
                 </div>
             </div>
         </div>
         <div id="nowPlayingRight">
+            <!-- 音量相關 -->
             <div class="volumeBar">
                 <button class="controlBtn volume" title="Volume Btn
         ">
-                    <img src="assets/images/icons/volume.png" alt="VolumeBtn" id="no_muted" onclick="mutedSong();" />
+                    <img src="assets/images/icons/volume.png" alt="VolumeBtn" id="no_muted"  />
 
-                    <img src="assets/images/icons/volume-mute.png" alt="MutedBtn" id="muted" onclick="no_mutedSong()" style="display: none" />
+                    <img src="assets/images/icons/volume-mute.png" alt="MutedBtn" id="muted" style="display: none" />
                 </button>
                 <div class="progressBar">
                     <div class="progressBarBg">
-                        <div class="progress"></div>
+                        <div class="progress"id="volumBar"></div>
                     </div>
                 </div>
             </div>
