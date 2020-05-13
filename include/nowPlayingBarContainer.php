@@ -4,10 +4,9 @@ $resultArray = array(); //create array
 while ($row = mysqli_fetch_array($songQuery)) {
     array_push($resultArray, $row['id']);
 }
-
 $jsonArray = json_encode($resultArray);
-
 ?>
+
 <script>
     $(function() {
         currentPlaylist = <?php echo $jsonArray; ?>;
@@ -55,8 +54,8 @@ $jsonArray = json_encode($resultArray);
                 //將專輯圖片傳入撥放器
                 $(".albumLink img").attr("src", album.artworkPath);
             });
-            audioElement.setTrack(track.src);
-            audioElement.play();
+            audioElement.setTrack(track);
+            playSong();
         });
 
         if (play == true) {
@@ -66,6 +65,12 @@ $jsonArray = json_encode($resultArray);
 
     function playSong() {
 
+        //呼叫撥放計數器
+        if (audioElement.audio.currentTime == 0) {
+            $.post("include/handler/ajax/updatePlay.php", {
+                songId: audioElement.currentlyPlaying.id
+            });
+        }
 
         $(".controlBtn.play").hide();
         $(".controlBtn.pause").show();
@@ -78,11 +83,8 @@ $jsonArray = json_encode($resultArray);
         audioElement.pause();
     }
     //取得撥放器目前音量
-    function get_volume() {
-        var get_current_volume
-        //儲存目前音量
-        get_current_volume = audioElement.audio.volume;
-        console.log(get_current_volume);}
+
+
 
     //撥放器靜音
     function mutedSong() {
@@ -163,7 +165,7 @@ $jsonArray = json_encode($resultArray);
             <div class="volumeBar">
                 <button class="controlBtn volume" title="Volume Btn
         ">
-                    <img src="assets/images/icons/volume.png" alt="VolumeBtn" id="no_muted" onclick="get_volume();mutedSong();" />
+                    <img src="assets/images/icons/volume.png" alt="VolumeBtn" id="no_muted" onclick="mutedSong();" />
 
                     <img src="assets/images/icons/volume-mute.png" alt="MutedBtn" id="muted" onclick="no_mutedSong()" style="display: none" />
                 </button>
