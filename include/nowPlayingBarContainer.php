@@ -11,7 +11,7 @@ $jsonArray = json_encode($resultArray);
     $(function() {
         currentPlaylist = <?php echo $jsonArray; ?>;
         audioElement = new Audio();
-        audioElement.setAttribute();
+        // audioElement.setAttribute();
 
         setTrack(currentPlaylist[0], currentPlaylist, false);
     })
@@ -27,6 +27,7 @@ $jsonArray = json_encode($resultArray);
         }, function(data) {
             // JSON.parse 將傳進來的json格式資料轉換成js 物件形式
             var track = JSON.parse(data);
+            console.log("nowPlayingBarContainer 裡的測試");
             console.log(track);
             //取得歌曲名稱
             $(".trackName span").text(track.title);
@@ -51,6 +52,7 @@ $jsonArray = json_encode($resultArray);
                 var album = JSON.parse(data);
                 //check data
                 console.log(album);
+                console.log("nowPlayingBarContainer 裡的測試 結束");
                 //將專輯圖片傳入撥放器
                 $(".albumLink img").attr("src", album.artworkPath);
             });
