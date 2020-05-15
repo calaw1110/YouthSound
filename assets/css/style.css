@@ -290,9 +290,10 @@ body {
   position: absolute;
   cursor: pointer;
 }
-.tracklistRow:hover .trackCount img {
+.tracklistRow:hover img {
   visibility: visible;
 }
+
 .tracklistRow .trackInfo {
   width: 75%;
   float: left;

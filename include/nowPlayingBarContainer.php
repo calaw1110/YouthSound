@@ -9,66 +9,82 @@ $jsonArray = json_encode($resultArray);
 
 <script>
     $(function() {
+        //撥放清單
         currentPlaylist = <?php echo $jsonArray; ?>;
         audioElement = new Audio();
         // audioElement.setAttribute();
+        // and
         setTrack(currentPlaylist[0], currentPlaylist, false);
         //預設音量條
         updateVolumeProgressBar(audioElement.audio);
-       //處理時間軸拖拉
+
+
+
+
+
+        //整個container 先套用事件預防 再針對需要使用的事件以及位置撰寫事件功能，事件只會在對的地方發生
+        $("#nowPlayingBarContainer").on("mousedown touchstart mousemove touchmove", function(e) {
+            e.preventDefault(); //防止事件發生相對應的行為  -> 不會被highlight 也不會觸發其他事件
+        })
+
+        //處理時間軸拖拉
         //滑鼠按下事件
-        $('.playbackBar .progressBar').mousedown(function(){
+        $('.playbackBar .progressBar').mousedown(function() {
             mouseDown = true;
         })
         //e 指的是事件   mousemove 滑鼠移動事件
-        $('.playbackBar .progressBar').mousemove(function(e){
-            if(mouseDown == true){
+        $('.playbackBar .progressBar').mousemove(function(e) {
+            if (mouseDown == true) {
                 //依據滑鼠拉的長度 來改變撥放時間
-                timeFromOffest(e,this);
+                timeFromOffest(e, this);
                 //this = .playbackBar .progressBar
             }
         })
         //滑鼠放開事件
-        $('.playbackBar .progressBar').mouseup(function(e){
-            timeFromOffest(e,this);
-               //this = .playbackBar .progressBar
+        $('.playbackBar .progressBar').mouseup(function(e) {
+            timeFromOffest(e, this);
+            //this = .playbackBar .progressBar
         })
 
         //處理拖拉音量軸
-        $('.volumeBar .progressBar').mousedown(function(){
+        $('.volumeBar .progressBar').mousedown(function() {
             mouseDown = true;
         })
         //e 指的是事件   mousemove 滑鼠移動事件
-        $('.volumeBar .progressBar').mousemove(function(e){
-            if(mouseDown == true){
+        $('.volumeBar .progressBar').mousemove(function(e) {
+            if (mouseDown == true) {
 
-                var percentage = e.offsetX /$(this).width();
-                if(percentage >=0 && percentage<=1){
-                    audioElement.audio.volume = percentage}
+                var percentage = e.offsetX / $(this).width();
+                if (percentage >= 0 && percentage <= 1) {
+                    audioElement.audio.volume = percentage
+                }
             }
         })
         //滑鼠放開事件
-        $('.volumeBar .progressBar').mouseup(function(e){
-            var percentage = e.offsetX /$(this).width();
+        $('.volumeBar .progressBar').mouseup(function(e) {
+            var percentage = e.offsetX / $(this).width();
             audioElement.audio.volume = percentage
         })
-        $(document).mouseup(function(){
+        $(document).mouseup(function() {
             mouseDown = false;
         })
-})
-function timeFromOffest(mouse,progressBar){
-    //取得拖拉移動的變化量
-    var percentage = mouse.offsetX / $(progressBar).width() * 100;
-    //根據變化量去計算對應的時間
-    var seconds = audioElement.audio.duration * (percentage/100);
-   //呼叫function 來更改 目前撥放時間
-    audioElement.setTime(seconds)
-}
-//取得播放清單  賦予 撥放器功能
-function setTrack(trackId, newPlaylist, play) {
+    })
 
+    function timeFromOffest(mouse, progressBar) {
+        //取得拖拉移動的變化量
+        var percentage = mouse.offsetX / $(progressBar).width() * 100;
+        //根據變化量去計算對應的時間
+        var seconds = audioElement.audio.duration * (percentage / 100);
+        //呼叫function 來更改 目前撥放時間
+        audioElement.setTime(seconds)
+    }
+    //取得播放清單  賦予 撥放器功能
+    function setTrack(trackId, newPlaylist, play) {
+        //indexOf() 尋找(內的值)出現在的位置 沒有則回傳-1
+        // ex: 1:a 2:b 3:c  where =  indexOf(c) = 3   or where =indexOf(d)=-1
+        currentIndex = currentPlaylist.indexOf(trackId)
+        pauseSong();
         //取得音檔位置來播放
-        // audioElement.setTrack("");
         // $.post("URL ",{songId : trackId}, function(data){ } );
         $.post("include/handler/ajax/getSongJson.php", {
             songId: trackId
@@ -134,6 +150,55 @@ function setTrack(trackId, newPlaylist, play) {
         $(".controlBtn.play").show();
         audioElement.pause();
     }
+
+    function nextSong() {
+        if (repeat == true) {
+            audioElement.setTime(0);
+            playSong();
+            return
+        }
+
+        // array -1
+        if (currentIndex == currentPlaylist.length - 1) {
+            //最後一首歌曲的下一首回到第一首
+            currentIndex = 0;
+        } else {
+            currentIndex++;
+        }
+        var trackToPlay = currentPlaylist[currentIndex];
+        setTrack(trackToPlay, currentPlaylist, true);
+    }
+
+    function prevSong() {
+        if (currentIndex == 0 || audioElement.audio.currentTime >= 3) {
+            //第一首歌的上一首 回到最後一首
+            audioElement.setTime(0);
+        } else {
+            currentIndex--;
+            var trackToPlay = currentPlaylist[currentIndex];
+            setTrack(trackToPlay, currentPlaylist, true);
+        }
+    }
+
+    function setRepeat() {
+        // script.js line 5
+        repeat = !repeat;
+        var imageName = repeat ? "repeat-active.png" : "repeat.png";
+        $(".controlBtn.repeat img").attr("src", "assets/images/icons/" + imageName);
+    }
+
+    function setMute() {
+
+        audioElement.audio.muted = !audioElement.audio.muted;
+        var imageName = audioElement.audio.muted ? "volume-mute.png" : "volume.png";
+        $(".controlBtn.volume img").attr("src", "assets/images/icons/" + imageName);
+    }
+
+    function setShuffle() {
+        shuffle = !shuffle;
+        var imageName = shuffle ? "shuffle-active.png" : "shuffle.png";
+        $(".controlBtn.shuffle img").attr("src", "assets/images/icons/" + imageName);
+    }
 </script>
 <div id="nowPlayingBarContainer">
     <!-- 音樂撥放器 -->
@@ -162,10 +227,10 @@ function setTrack(trackId, newPlaylist, play) {
             <div class="content playerControls">
                 <div class="buttons">
                     <!-- 控制面板的按鈕 -->
-                    <button class="controlBtn shuffle" title="Shuffle button">
+                    <button class="controlBtn shuffle" title="Shuffle button" onclick="setShuffle()">
                         <img src="assets/images/icons/shuffle.png" alt="ShuffleBtn" />
                     </button>
-                    <button class="controlBtn previous" title="Previous button">
+                    <button class="controlBtn previous" title="Previous button" onclick="prevSong()">
                         <img src="assets/images/icons/previous.png" alt="PreviousBtn" />
                     </button>
                     <button class="controlBtn play" title="Play button" onclick="playSong()">
@@ -174,10 +239,10 @@ function setTrack(trackId, newPlaylist, play) {
                     <button class="controlBtn pause" title="Pause button" onclick="pauseSong()" style="display: none;">
                         <img src="assets/images/icons/pause.png" alt="PauseBtn" />
                     </button>
-                    <button class="controlBtn next" title="Next button">
+                    <button class="controlBtn next" title="Next button" onclick="nextSong()">
                         <img src="assets/images/icons/next.png" alt="NextBtn" />
                     </button>
-                    <button class="controlBtn repeat" title="Repeat button">
+                    <button class="controlBtn repeat" title="Repeat button" onclick="setRepeat()">
                         <img src="assets/images/icons/repeat.png" alt="RepeatBtn" />
                     </button>
                 </div>
@@ -187,7 +252,7 @@ function setTrack(trackId, newPlaylist, play) {
                     <span class="progressTime current">0:00</span>
                     <div class="progressBar">
                         <div class="progressBarBg">
-                            <div class="progress"id="timeBar"></div>
+                            <div class="progress" id="timeBar"></div>
                         </div>
                     </div>
                     <!-- 剩餘時間 or 總時間 -->
@@ -199,14 +264,12 @@ function setTrack(trackId, newPlaylist, play) {
             <!-- 音量相關 -->
             <div class="volumeBar">
                 <button class="controlBtn volume" title="Volume Btn
-        ">
-                    <img src="assets/images/icons/volume.png" alt="VolumeBtn" id="no_muted"  />
-
-                    <img src="assets/images/icons/volume-mute.png" alt="MutedBtn" id="muted" style="display: none" />
+        " onclick="setMute()">
+                    <img src="assets/images/icons/volume.png" alt="VolumeBtn" />
                 </button>
                 <div class="progressBar">
                     <div class="progressBarBg">
-                        <div class="progress"id="volumBar"></div>
+                        <div class="progress" id="volumBar"></div>
                     </div>
                 </div>
             </div>
