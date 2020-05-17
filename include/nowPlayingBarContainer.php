@@ -71,6 +71,17 @@ $jsonArray = json_encode($resultArray);
             shufflePlaylist = currentPlaylist.slice(); // slice() ARRAY 存放進另外一個變數
             shuffleArray(shufflePlaylist);
         }
+        if (shuffle == true) {
+            // 隨機歌單
+            currentIndex = shufflePlaylist.indexOf(trackId);
+        } else {
+            // 關閉隨機功能
+            //回歸正常撥放順序
+            currentIndex = currentPlaylist.indexOf(trackId);
+        }
+
+
+
         //indexOf() 尋找(內的值)出現在的位置 沒有則回傳-1
         // ex: 1:a 2:b 3:c  where =  indexOf(c) = 3   or where =indexOf(d)=-1
         currentIndex = currentPlaylist.indexOf(trackId)
