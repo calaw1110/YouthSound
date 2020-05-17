@@ -1,4 +1,6 @@
 var currentPlaylist = [];
+var shufflePlaylist = [];
+var tempPlaylist = [];
 var audioElement;
 var mouseDown = false; //呼滑鼠"按住"事件
 var currentIndex = 0;
