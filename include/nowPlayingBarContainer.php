@@ -79,9 +79,6 @@ $jsonArray = json_encode($resultArray);
             //回歸正常撥放順序
             currentIndex = currentPlaylist.indexOf(trackId);
         }
-
-
-
         //indexOf() 尋找(內的值)出現在的位置 沒有則回傳-1
         // ex: 1:a 2:b 3:c  where =  indexOf(c) = 3   or where =indexOf(d)=-1
         currentIndex = currentPlaylist.indexOf(trackId)
@@ -105,13 +102,9 @@ $jsonArray = json_encode($resultArray);
             }, function(data) {
                 //轉JSON格式
                 var artist = JSON.parse(data);
-                //check data
-                // console.log(artist);
-
                 //將歌手名字傳進撥放器
                 $(".artisName span").text(artist.name)
             });
-
             //取得專輯資訊
             $.post("include/handler/ajax/getAlbumJson.php", {
                 albumId: track.album
@@ -196,10 +189,26 @@ $jsonArray = json_encode($resultArray);
         var imageName = repeat ? "repeat-active.png" : "repeat.png";
         $(".controlBtn.repeat img").attr("src", "assets/images/icons/" + imageName);
     }
-
+    function setVolumeProgressBar(num) {
+        console.log(num)
+        var volume = num*100
+        console.log(volume)
+    $(".volumeBar .progress").css("width", volume + "%");
+}
     function setMute() {
-
-        audioElement.audio.muted = !audioElement.audio.muted;
+        var save_volume=audioElement.audio.volume;
+        if(audioElement.audio.muted==false){
+            //set muted=true
+            //ToDo
+           setVolumeProgressBar(0) ;
+           audioElement.audio.muted=true
+        }else{
+            //set muted = false
+            //ToDo
+            console.log(save_volume)
+            setVolumeProgressBar(save_volume)
+            audioElement.audio.muted=false
+        }
         var imageName = audioElement.audio.muted ? "volume-mute.png" : "volume.png";
         $(".controlBtn.volume img").attr("src", "assets/images/icons/" + imageName);
     }
