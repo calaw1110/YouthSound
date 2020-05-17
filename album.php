@@ -28,7 +28,8 @@ $artist = $album->getAlbumArtist(); //回傳Album實作化
             $albumArtist = $albumSong->getSongArtistId();
             echo "<li class='tracklistRow'>
                             <div class='trackCount'>
-                                <img class='play' src='assets/images/icons/play-white.png'>
+                                <img class='play' src='assets/images/icons/play-white.png'
+                                onclick='setTrack(" . $albumSong->getSongId() . ",tempPlaylist,true)'>
                                 <span class='trackNumber'>$i</span>
                             </div>
                             <div class='trackInfo'>
@@ -45,8 +46,13 @@ $artist = $album->getAlbumArtist(); //回傳Album實作化
                     </li>";
             $i++;
         }
-
         ?>
+        <script>
+            //將songIdArray 回傳時使用json格式 並儲存在tempSongIds 裡面 -> 這張專輯所有的歌的ID
+            var tempSongIds = '<?php echo json_encode($songIdArray)  ?>'
+            // 將tempSongIds 內容轉成對應的物件型式
+            tempPlaylist = JSON.parse(tempSongIds);
+        </script>
     </ul>
 </div>
 
