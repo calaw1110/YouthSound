@@ -1,3 +1,6 @@
+<!-- bug    從進入網站的隨機歌單 轉換成專輯歌單  的第一首歌 點擊下一首按鈕  仍會是第一首歌  要第二次才會換歌-->
+<!-- 除了首頁按鈕 其他都還沒有做 -->
+
 <?php
 $songQuery = mysqli_query($conn, "SELECT * FROM songs ORDER BY RAND() LIMIT 10");
 $resultArray = array(); //create array
