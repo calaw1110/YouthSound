@@ -1,4 +1,6 @@
+CREATE DATABASE musicweb CHARACTER set utf8mb4 collate utf8mb4_general_ci;
 
+USE musicweb;
 
 CREATE TABLE IF NOT EXISTS `albums` (
 `id` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -6,7 +8,7 @@ CREATE TABLE IF NOT EXISTS `albums` (
   `artist` int(11) NOT NULL,
   `genre` int(11) NOT NULL,
   `artworkPath` varchar(500) NOT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=8 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 AUTO_INCREMENT=8 ;
 
 --
 -- Dumping data for table `albums`
@@ -30,7 +32,7 @@ INSERT INTO `albums` ( `title`, `artist`, `genre`, `artworkPath`) VALUES
 CREATE TABLE IF NOT EXISTS `artists` (
 `id` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
   `name` varchar(50) NOT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=6 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 AUTO_INCREMENT=6 ;
 
 --
 -- Dumping data for table `artists`
@@ -52,7 +54,7 @@ INSERT INTO `artists` ( `name`) VALUES
 CREATE TABLE IF NOT EXISTS `genres` (
 `id` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
   `name` varchar(50) NOT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=11 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 AUTO_INCREMENT=11 ;
 
 --
 -- Dumping data for table `genres`
@@ -83,15 +85,15 @@ CREATE TABLE IF NOT EXISTS `Songs` (
   `album` int(11) NOT NULL,
   `genre` int(11) NOT NULL,
   `duration` varchar(8) NOT NULL,
-  `path` varchar(500) NOT NULL,
+  `src` varchar(500) NOT NULL,
   `albumOrder` int(11) NOT NULL,
   `plays` int(11) NOT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=32 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 AUTO_INCREMENT=32 ;
 
 --
 -- Dumping data for table `Songs`
 --
-INSERT INTO `Songs` ( `title`, `artist`, `album`, `genre`, `duration`, `path`, `albumOrder`, `plays`) VALUES
+INSERT INTO `Songs` ( `title`, `artist`, `album`, `genre`, `duration`, `src`, `albumOrder`, `plays`) VALUES
 ( 'Acoustic Breeze', 1, 5, 8, '2:37', 'assets/music/bensound-acousticbreeze.mp3', 1, 0),
 ( 'A new beginning', 1, 5, 1, '2:35', 'assets/music/bensound-anewbeginning.mp3', 2, 0),
 ( 'Better Days', 1, 5, 2, '2:33', 'assets/music/bensound-betterdays.mp3', 3, 0),
@@ -126,4 +128,17 @@ INSERT INTO `Songs` ( `title`, `artist`, `album`, `genre`, `duration`, `path`, `
 
 
 
+--
+-- 資料表結構 `tmember`
+--
 
+CREATE TABLE `tmember` (
+  `mID` int(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT COMMENT '會員編號',
+  `mUsername` varchar(50) NOT NULL COMMENT '會員帳號',
+  `mPwd` varchar(50) NOT NULL COMMENT '會員密碼',
+  `mEmail` varchar(50) NOT NULL COMMENT '會員信箱',
+  `mSignUpDate` date NOT NULL COMMENT '會員註冊日',
+  `mProfilePic` varchar(50) NOT NULL COMMENT '會員照片',
+  `mNickname` varchar(50) NOT NULL COMMENT '會員暱稱',
+  `mIntro` varchar(500) NOT NULL COMMENT '會員介紹'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
