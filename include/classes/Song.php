@@ -33,6 +33,10 @@ class Song
     {
         return $this->title;
     }
+    public function getSongId()
+    {
+        return $this->id;
+    }
     public function getSongArtistId()
     {
         return new Artist($this->conn, $this->artistId);
