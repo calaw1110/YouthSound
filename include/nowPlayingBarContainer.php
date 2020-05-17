@@ -9,24 +9,17 @@ $jsonArray = json_encode($resultArray);
 
 <script>
     $(function() {
-        //撥放清單
-        currentPlaylist = <?php echo $jsonArray; ?>;
+        var newPlaylist = <?php echo $jsonArray; ?>; //撥放清單
         audioElement = new Audio();
         // audioElement.setAttribute();
-        // and
-        setTrack(currentPlaylist[0], currentPlaylist, false);
-        //預設音量條
-        updateVolumeProgressBar(audioElement.audio);
+        setTrack(newPlaylist[0], newPlaylist, false);
 
-
-
-
+        updateVolumeProgressBar(audioElement.audio); //預設音量條
 
         //整個container 先套用事件預防 再針對需要使用的事件以及位置撰寫事件功能，事件只會在對的地方發生
         $("#nowPlayingBarContainer").on("mousedown touchstart mousemove touchmove", function(e) {
             e.preventDefault(); //防止事件發生相對應的行為  -> 不會被highlight 也不會觸發其他事件
         })
-
         //處理時間軸拖拉
         //滑鼠按下事件
         $('.playbackBar .progressBar').mousedown(function() {
@@ -53,7 +46,6 @@ $jsonArray = json_encode($resultArray);
         //e 指的是事件   mousemove 滑鼠移動事件
         $('.volumeBar .progressBar').mousemove(function(e) {
             if (mouseDown == true) {
-
                 var percentage = e.offsetX / $(this).width();
                 if (percentage >= 0 && percentage <= 1) {
                     audioElement.audio.volume = percentage
@@ -69,17 +61,13 @@ $jsonArray = json_encode($resultArray);
             mouseDown = false;
         })
     })
-
-    function timeFromOffest(mouse, progressBar) {
-        //取得拖拉移動的變化量
-        var percentage = mouse.offsetX / $(progressBar).width() * 100;
-        //根據變化量去計算對應的時間
-        var seconds = audioElement.audio.duration * (percentage / 100);
-        //呼叫function 來更改 目前撥放時間
-        audioElement.setTime(seconds)
-    }
     //取得播放清單  賦予 撥放器功能
     function setTrack(trackId, newPlaylist, play) {
+        if (newPlaylist != currentPlaylist) {
+            currentPlaylist = newPlaylist;
+            shufflePlaylist = currentPlaylist.slice(); // slice() ARRAY 存放進另外一個變數
+            shuffleArray(shufflePlaylist);
+        }
         //indexOf() 尋找(內的值)出現在的位置 沒有則回傳-1
         // ex: 1:a 2:b 3:c  where =  indexOf(c) = 3   or where =indexOf(d)=-1
         currentIndex = currentPlaylist.indexOf(trackId)
@@ -131,8 +119,16 @@ $jsonArray = json_encode($resultArray);
         }
     }
 
-    function playSong() {
+    function timeFromOffest(mouse, progressBar) {
+        //取得拖拉移動的變化量
+        var percentage = mouse.offsetX / $(progressBar).width() * 100;
+        //根據變化量去計算對應的時間
+        var seconds = audioElement.audio.duration * (percentage / 100);
+        //呼叫function 來更改 目前撥放時間
+        audioElement.setTime(seconds)
+    }
 
+    function playSong() {
         //呼叫撥放計數器
         if (audioElement.audio.currentTime == 0) {
             $.post("include/handler/ajax/updatePlay.php", {
@@ -165,7 +161,7 @@ $jsonArray = json_encode($resultArray);
         } else {
             currentIndex++;
         }
-        var trackToPlay = currentPlaylist[currentIndex];
+        var trackToPlay = shuffle ? shufflePlaylist[currentIndex] : currentPlaylist[currentIndex];
         setTrack(trackToPlay, currentPlaylist, true);
     }
 
@@ -193,11 +189,34 @@ $jsonArray = json_encode($resultArray);
         var imageName = audioElement.audio.muted ? "volume-mute.png" : "volume.png";
         $(".controlBtn.volume img").attr("src", "assets/images/icons/" + imageName);
     }
+    //陣列隨機
+    function shuffleArray(a) {
+        var j, x, i;
+        for (i = a.length - 1; i > 0; i--) {
+            j = Math.floor(Math.random() * (i + 1));
+            x = a[i];
+            a[i] = a[j];
+            a[j] = x;
+        }
+        return a;
+    }
 
     function setShuffle() {
         shuffle = !shuffle;
         var imageName = shuffle ? "shuffle-active.png" : "shuffle.png";
         $(".controlBtn.shuffle img").attr("src", "assets/images/icons/" + imageName);
+        //隨機撥放功能
+        if (shuffle == true) {
+            // 隨機歌單
+            shuffleArray(shufflePlaylist);
+            currentIndex = shufflePlaylist.indexOf(audioElement.currentlyPlaying.id);
+        } else {
+            // 關閉隨機功能
+            //回歸正常撥放順序
+            currentIndex = currentPlaylist.indexOf(audioElement.currentlyPlaying.id);
+        }
+        console.log(shufflePlaylist);
+        console.log(currentPlaylist);
     }
 </script>
 <div id="nowPlayingBarContainer">
