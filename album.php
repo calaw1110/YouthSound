@@ -29,7 +29,7 @@ $artist = $album->getAlbumArtist(); //回傳Album實作化
             echo "<li class='tracklistRow'>
                             <div class='trackCount'>
                                 <img class='play' src='assets/images/icons/play-white.png'
-                                onclick='setTrack(" . $albumSong->getSongId() . ",tempPlaylist,true)'>
+                                onclick='setTrack(\"" . $albumSong->getSongId() . "\",tempPlaylist,true)'>
                                 <span class='trackNumber'>$i</span>
                             </div>
                             <div class='trackInfo'>
