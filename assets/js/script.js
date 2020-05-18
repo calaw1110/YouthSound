@@ -4,8 +4,22 @@ var tempPlaylist = [];
 var audioElement;
 var mouseDown = false; //呼滑鼠"按住"事件
 var currentIndex = 0;
-var repeat = false;
-var shuffle = false;
+var repeat = false;//重複狀態
+var shuffle = false;//隨機狀態
+var userLoggedIn;//登入記錄
+
+function openPage(url){
+    if(url.indexOf("?") == -1 ){
+        url = url + "?";
+    }
+    //將傳進去的內容 進行URI 編碼
+    var encodeUrl =encodeURI(url + "&userLoggedIn=" + userLoggedIn );
+    $("#mainContent").load(encodeUrl);
+    $("body").scrollTop(0);//垂直移動量
+
+    history.pushState(null,null,url);
+}
+
 
 //將傳入的時間 轉換格式
 function formatTime(seconds) {
