@@ -1,6 +1,3 @@
-<!-- bug    從進入網站的隨機歌單 轉換成專輯歌單  的第一首歌 點擊下一首按鈕  仍會是第一首歌  要第二次才會換歌-->
-<!-- 除了首頁按鈕 其他都還沒有做 -->
-
 <?php
 $songQuery = mysqli_query($conn, "SELECT * FROM songs ORDER BY RAND() LIMIT 10");
 $resultArray = array(); //create array
@@ -9,7 +6,6 @@ while ($row = mysqli_fetch_array($songQuery)) {
 }
 $jsonArray = json_encode($resultArray);
 ?>
-
 <script>
     $(function() {
         var newPlaylist = <?php echo $jsonArray; ?>; //撥放清單
@@ -118,12 +114,12 @@ $jsonArray = json_encode($resultArray);
                 $(".albumLink img").attr("src", album.artworkPath);
             });
             audioElement.setTrack(track);
-            playSong();
+            if (play == true) {
+                playSong();
+            }
         });
 
-        if (play == true) {
-            audioElement.play();
-        }
+
     }
 
     function timeFromOffest(mouse, progressBar) {
@@ -160,7 +156,6 @@ $jsonArray = json_encode($resultArray);
             playSong();
             return
         }
-
         // array -1
         if (currentIndex == currentPlaylist.length - 1) {
             //最後一首歌曲的下一首回到第一首
@@ -189,25 +184,25 @@ $jsonArray = json_encode($resultArray);
         var imageName = repeat ? "repeat-active.png" : "repeat.png";
         $(".controlBtn.repeat img").attr("src", "assets/images/icons/" + imageName);
     }
+
     function setVolumeProgressBar(num) {
         console.log(num)
-        var volume = num*100
-        console.log(volume)
-    $(".volumeBar .progress").css("width", volume + "%");
-}
+        // 不會跟著音量變動或是禁音變動
+        $(".volumeBar .progress").css("width", num * 100 + "%");
+    }
+
     function setMute() {
-        var save_volume=audioElement.audio.volume;
-        if(audioElement.audio.muted==false){
+        var save_volume = audioElement.audio.volume;
+        if (audioElement.audio.muted == false) {
             //set muted=true
             //ToDo
-           setVolumeProgressBar(0) ;
-           audioElement.audio.muted=true
-        }else{
+            setVolumeProgressBar(0);
+            audioElement.audio.muted = true
+        } else {
             //set muted = false
             //ToDo
-            console.log(save_volume)
             setVolumeProgressBar(save_volume)
-            audioElement.audio.muted=false
+            audioElement.audio.muted = false
         }
         var imageName = audioElement.audio.muted ? "volume-mute.png" : "volume.png";
         $(".controlBtn.volume img").attr("src", "assets/images/icons/" + imageName);
