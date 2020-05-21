@@ -22,7 +22,7 @@ body {
   width: 100%;
   bottom: 0;
   position: fixed;
-  background-color: #000;
+  background-color: rgb(58, 58, 58);
   min-width: 620px;
 }
 #nowPlayingBar {
@@ -170,6 +170,9 @@ body {
   border-top: 1px solid #a0a0a0;
   padding: 10px 0;
 }
+.navBar:hover span {
+  cursor: pointer;
+}
 .navItem {
   padding: 7px;
   font-size: 14px;
@@ -236,8 +239,8 @@ body {
   transition: 0.5s;
   color: #fff;
 }
-.gridViewItem a {
-  text-decoration: none;
+.gridViewItem:hover span {
+  cursor: pointer;
 }
 .entityInfo {
   padding: 40px 0 10px 0;
@@ -326,4 +329,32 @@ body {
 .tracklistRow .trackInfo .trackName {
   color: #fff;
   margin-bottom: 7px;
+}
+.artistInfo {
+  text-align: center;
+}
+.button {
+  color: #fff;
+  cursor: pointer;
+  margin-bottom: 10px;
+  background-color: transparent;
+  font-weight: 500;
+  letter-spacing: 2px;
+  border: 2px solid #fff;
+  border-radius: 500px;
+  padding: 15px;
+  min-width: 130px;
+}
+.button:hover {
+  color: rgb(0, 0, 0);
+  background-color: #fff;
+  transition: 0.3s;
+}
+.borderBottom {
+  border-bottom: 1px solid #939393;
+  margin-bottom: 20px;
+}
+.tracklistContainer h2,
+.gridViewContainer h2 {
+  text-align: center;
 }
