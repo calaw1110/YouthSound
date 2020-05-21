@@ -100,6 +100,8 @@ $jsonArray = json_encode($resultArray);
                 var artist = JSON.parse(data);
                 //將歌手名字傳進撥放器
                 $(".artisName span").text(artist.name)
+                $(".artisName span").attr("onclick", "openPage('artist.php?id=" +
+                    artist.id + "')");
             });
             //取得專輯資訊
             $.post("include/handler/ajax/getAlbumJson.php", {
@@ -244,17 +246,17 @@ $jsonArray = json_encode($resultArray);
         <div id="nowPlayingLeft">
             <div class="content">
                 <!-- 專輯圖片 -->
-                <span class="albumLink"><img src="" alt="" /></span>
+                <span class="albumLink"><img role="link" tabindex="0" src="" alt="" /></span>
 
                 <!-- 歌名 -->
                 <div class="trackInfo">
                     <span class="trackName">
                         <!-- name of song -->
-                        <span></span>
+                        <span role="link" tabindex="0"></span>
                     </span>
                     <!-- 演唱者 -->
                     <span class="artisName">
-                        <span></span>
+                        <span role="link" tabindex="0"></span>
                     </span>
                 </div>
             </div>
