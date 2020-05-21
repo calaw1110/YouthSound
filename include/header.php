@@ -4,14 +4,15 @@ include("include/config.php");
 include("include/classes/Artist.php"); //1
 include("include/classes/Album.php"); //2
 include("include/classes/Song.php"); //3
-include("include/classes/Genre.php"); //4
 //session_destroy();LOG OUT
 //假如有登入狀態
 if (isset($_SESSION['userLoggedIn'])) {
     $userLoggedIn = $_SESSION['userLoggedIn'];
+    echo "<script>userLoggedIn ='$userLoggedIn';</script>";
 } else {
     header("Location: Account.php");
-} ?>
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -30,8 +31,8 @@ if (isset($_SESSION['userLoggedIn'])) {
 <body>
 
     <div id="mainContainer">
-        <div id="topContainer"></div>
-        <?php include("include/navBarContainer.php"); ?>
+        <div id="topContainer">
+            <?php include("include/navBarContainer.php"); ?>
 
-        <div id="mainViewContainer">
-            <div id="mainContent">
+            <div id="mainViewContainer">
+                <div id="mainContent">
