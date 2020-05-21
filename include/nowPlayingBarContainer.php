@@ -100,6 +100,7 @@ $jsonArray = json_encode($resultArray);
                 var artist = JSON.parse(data);
                 //將歌手名字傳進撥放器
                 $(".artisName span").text(artist.name)
+                //用歌手名字做歌手連結 展示所有歌曲 專輯
                 $(".artisName span").attr("onclick", "openPage('artist.php?id=" +
                     artist.id + "')");
             });
@@ -114,6 +115,12 @@ $jsonArray = json_encode($resultArray);
                 // console.log("nowPlayingBarContainer 裡的測試 結束");
                 //將專輯圖片傳入撥放器
                 $(".albumLink img").attr("src", album.artworkPath);
+                //用圖片做專輯連結 use ajax
+                $(".albumLink img").attr("onclick", "openPage('album.php?id=" +
+                    album.id + "')");
+                //用歌名做連結到專輯
+                $(".trackName span").attr("onclick", "openPage('album.php?id=" +
+                    album.id + "')");
             });
             audioElement.setTrack(track);
             if (play == true) {

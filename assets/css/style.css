@@ -9,7 +9,7 @@ body {
   height: 100%;
 }
 * {
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: "微軟正黑體", Arial, Helvetica, sans-serif;
   color: #fff;
   letter-spacing: 1px;
 }
@@ -170,9 +170,7 @@ body {
   border-top: 1px solid #a0a0a0;
   padding: 10px 0;
 }
-.navBar:hover span {
-  cursor: pointer;
-}
+
 .navItem {
   padding: 7px;
   font-size: 14px;
@@ -239,9 +237,7 @@ body {
   transition: 0.5s;
   color: #fff;
 }
-.gridViewItem:hover span {
-  cursor: pointer;
-}
+
 .entityInfo {
   padding: 40px 0 10px 0;
   display: inline-block;
@@ -357,4 +353,25 @@ body {
 .tracklistContainer h2,
 .gridViewContainer h2 {
   text-align: center;
+}
+/* 有用role="link"的都是span標籤 讓span具有連結功能 也讓瀏覽器讀懂這些span的真正用途 */
+[role="link"] {
+  cursor: pointer;
+}
+.searchContainer {
+  background-color: #2a2a2a;
+  padding: 20px 30px;
+}
+.searchContainer h4 {
+  margin: 0;
+  font-weight: 500;
+}
+.searchContainer input {
+  width: 100%;
+  background-color: transparent;
+  border: none;
+  color: #fff;
+  font-weight: 700;
+  font-size: 65px;
+  letter-spacing: 2px;
 }
