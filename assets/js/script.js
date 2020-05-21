@@ -14,9 +14,9 @@ function openPage(url){
     }
     //將傳進去的內容 進行URI 編碼
     var encodeUrl =encodeURI(url + "&userLoggedIn=" + userLoggedIn );
+    console.log(encodeUrl);
     $("#mainContent").load(encodeUrl);
     $("body").scrollTop(0);//垂直移動量
-
     history.pushState(null,null,url);
 }
 
@@ -54,6 +54,10 @@ function updateTimeProgressBar(audio) {
 function updateVolumeProgressBar(audio) {
     var volume = audio.volume * 100;
     $(".volumeBar .progress").css("width", volume + "%");
+}
+
+function playFirstSong(){
+setTrack(tempPlaylist[0],tempPlaylist,true);
 }
 
 function Audio() {
