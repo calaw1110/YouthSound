@@ -375,3 +375,12 @@ body {
   font-size: 65px;
   letter-spacing: 2px;
 }
+.searchResultRow {
+  padding: 15px 10px;
+}
+.searchResultRow:hover {
+  background-color: #282828;
+}
+.searchResultRow .artistName span {
+  color: #fff;
+}

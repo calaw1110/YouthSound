@@ -27,17 +27,19 @@ if (isset($_GET['term'])) {
                 var val = $(".searchInput").val();
                 openPage("search.php?term=" + val);
                 console.log(val);
-            }, 500)
+            }, 800)
         })
     })
 </script>
 
 
 <div class="tracklistContainer borderBottom">
-    <h2>Songs</h2>
+    <h2>歌曲</h2>
     <ul class="tracklist">
         <?php
-        $songsQuery = mysqli_query($conn, "SELECT id FROM songs WHERE title LIKE '%$term%' LIMIT 10");
+
+        // 歌曲查詢
+        $songsQuery = mysqli_query($conn, "SELECT id FROM songs WHERE title LIKE '$term%' LIMIT 10");
 
         if (mysqli_num_rows($songsQuery) == 0) {
             echo "<span class='noResults'>找不到歌曲跟  " . $term . "  符合</span>";
@@ -82,4 +84,30 @@ if (isset($_GET['term'])) {
             tempPlaylist = JSON.parse(tempSongIds);
         </script>
     </ul>
+</div>
+
+<div class="artistContainer borderBottom">
+    <h2>歌手</h2>
+    <?php
+    // 歌手查詢
+    $artistsQuery = mysqli_query($conn, "SELECT id FROM artists WHERE name LIKE'$term%' LIMIT 10");
+
+    if (mysqli_num_rows($artistsQuery) == 0) {
+        echo "<span class='noResults'>找不到歌手跟  " . $term . "  符合</span>";
+    }
+    while ($row = mysqli_fetch_array($artistsQuery)) {
+        $artistsFound = new Artist($conn, $row['id']);
+
+        echo "<div class='searchResultRow'>
+                <div class='artistName'>
+                    <span role='link' tabindex='0'  onclick='openPage(\"artist.php?id=" . $artistsFound->getArtistId() . "\")'>"
+            . $artistsFound->getArtistName() .
+            "</span>
+                    </div>
+              </div>";
+    }
+
+
+    ?>
+
 </div>

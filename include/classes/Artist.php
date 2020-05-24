@@ -14,7 +14,10 @@ class Artist
         $artist = mysqli_fetch_array($artistQuery);
         $this->artist = $artist['name'];
     }
-
+    public function getArtistId()
+    {
+        return $this->id;
+    }
     public function getArtistName()
     {
         return $this->artist;
