@@ -7,8 +7,13 @@ var currentIndex = 0;
 var repeat = false;//重複狀態
 var shuffle = false;//隨機狀態
 var userLoggedIn;//登入記錄
+var timer;//設定執行時間
 
+//
 function openPage(url){
+    if(timer != null){
+        clearTimeout(timer);
+    }
     if(url.indexOf("?") == -1 ){
         url = url + "?";
     }

@@ -74,3 +74,4 @@ $artist = new Artist($conn, $artistId);
               </div>";
     }
     ?>
+</div>

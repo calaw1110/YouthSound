@@ -351,7 +351,8 @@ body {
   margin-bottom: 20px;
 }
 .tracklistContainer h2,
-.gridViewContainer h2 {
+.gridViewContainer h2,
+.artistContainer h2 {
   text-align: center;
 }
 /* 有用role="link"的都是span標籤 讓span具有連結功能 也讓瀏覽器讀懂這些span的真正用途 */
@@ -383,4 +384,8 @@ body {
 }
 .searchResultRow .artistName span {
   color: #fff;
+}
+.noResult {
+  margin: 15px;
+  display: block;
 }
