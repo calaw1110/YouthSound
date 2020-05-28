@@ -47,7 +47,7 @@ class Account
     {
         //使用md5加密  ->  123 = YTR$EWQRGE#WG%#
         $encryptedpw = md5($pw);
-        $profilePic = "assets/images/profile-pic/10444149-1.jpg";
+        $profilePic = "assets/images/profile-pic/test.jpg";
         $date = date("Y-m-d");
         //sql 語法
         $sql = "INSERT INTO members(mUsername,mPwd,mEmail,mSignUpDate,mProfilePic,mNickname) VALUES('$un','$encryptedpw','$email',' $date','$profilePic','$nickname')";

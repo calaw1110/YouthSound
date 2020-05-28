@@ -24,7 +24,24 @@ function openPage(url){
     $("body").scrollTop(0);//垂直移動量
     history.pushState(null,null,url);
 }
+//建立歌單
+function createPlaylist(){
+    console.log(userLoggedIn);
+    var promptTxt =prompt("請輸入歌單名稱");//顯示 可輸入 對話框
 
+    if(promptTxt != null){
+
+        $.post("includes/handlers/ajax/createPlaylist.php",{name:promptTxt, username:userLoggedIn}).done(function(error){
+
+            if(error !=""){
+                alert(error);
+                return;
+            }
+                // ajax 回傳成功則執行done()
+                openPage("yourMusic.php");
+        })
+    }
+}
 
 //將傳入的時間 轉換格式
 function formatTime(seconds) {

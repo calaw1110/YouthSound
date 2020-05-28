@@ -81,7 +81,7 @@ $jsonArray = json_encode($resultArray);
         pauseSong();
         //取得音檔位置來播放
         // $.post("URL ",{songId : trackId}, function(data){ } );
-        $.post("include/handler/ajax/getSongJson.php", {
+        $.post("includes/handlers/ajax/getSongJson.php", {
             songId: trackId
         }, function(data) {
             // JSON.parse 將傳進來的json格式資料轉換成js 物件形式
@@ -93,7 +93,7 @@ $jsonArray = json_encode($resultArray);
             $(".trackName span").text(track.title);
 
             //ajax取得演唱者名稱
-            $.post("include/handler/ajax/getArtistJson.php", {
+            $.post("includes/handlers/ajax/getArtistJson.php", {
                 artistId: track.artist
             }, function(data) {
                 //轉JSON格式
@@ -105,7 +105,7 @@ $jsonArray = json_encode($resultArray);
                     artist.id + "')");
             });
             //取得專輯資訊
-            $.post("include/handler/ajax/getAlbumJson.php", {
+            $.post("includes/handlers/ajax/getAlbumJson.php", {
                 albumId: track.album
             }, function(data) {
                 //將專輯資訊轉換成JSON格式
@@ -143,7 +143,7 @@ $jsonArray = json_encode($resultArray);
     function playSong() {
         //呼叫撥放計數器
         if (audioElement.audio.currentTime == 0) {
-            $.post("include/handler/ajax/updatePlay.php", {
+            $.post("includes/handlers/ajax/updatePlay.php", {
                 songId: audioElement.currentlyPlaying.id
             });
         }

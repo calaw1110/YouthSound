@@ -1,6 +1,7 @@
 <?php
 
 function sanitizeFormUsername($inputText) //inputText 修正
+
 {
     $input = strip_tags($inputText);
     //消除內容中的php or html標籤
@@ -25,11 +26,10 @@ if (isset($_POST['SignupBtn'])) {
     $useremail = $_POST['useremail'];
     $nickname = $_POST['nickname'];
 
-
-    $wasSuccessful =  $account->register($username, $userpwd, $userpwd2, $useremail, $nickname);
+    $wasSuccessful = $account->register($username, $userpwd, $userpwd2, $useremail, $nickname);
     if ($wasSuccessful == true) {
         //TODO
-        $_SESSION['userLoggedIn']=$username;
+        $_SESSION['userLoggedIn'] = $username;
         header("Location:index.php");
     }
 }

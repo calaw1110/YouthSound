@@ -1,5 +1,5 @@
 <?php
-include "include/includeFiles.php";
+include "includes/includeFiles.php";
 if (isset($_GET['term'])) {
     //接搜尋字串內容
     //urldecode() 將傳入的網址解碼
@@ -120,12 +120,12 @@ if (mysqli_num_rows($albumQuery) == 0) {
 
 while ($row = mysqli_fetch_array($albumQuery)) {
     echo "<div class='gridViewItem'>
-                        <span role='link' tabindex='0' onclick='openPage(\"album.php?id=" . $row['id'] . " \")'>
-                            <img src='" . $row['artworkPath'] . "' alt=''>
-                            <div class='gridViewInfo'>" . $row['title'] . "
-                            </div>
-                        </span>
-                    </div>";
+                                <span role='link' tabindex='0' onclick='openPage(\"album.php?id=" . $row['id'] . " \")'>
+                                    <img src='" . $row['artworkPath'] . "' alt=''>
+                                    <div class='gridViewInfo'>" . $row['title'] . "
+                                    </div>
+                                </span>
+                            </div>";
 }
 ?>
 </div>

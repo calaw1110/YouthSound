@@ -1,5 +1,5 @@
 <?php
-include("include/includeFiles.php");
+include("includes/includeFiles.php");
 ?>
 <h1 class="pageHeadingBig">Album test</h1>
 <div class="gridViewContainer">

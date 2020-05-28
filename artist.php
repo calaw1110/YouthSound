@@ -1,5 +1,5 @@
 <?php
-include("include/includeFiles.php");
+include("includes/includeFiles.php");
 if (isset($_GET['id'])) {
     $artistId = $_GET['id'];
 } else {

@@ -38,7 +38,7 @@ body {
 }
 #nowPlayingRight {
   position: relative;
-  margin-top: 20px;
+  margin-top: 30px;
 }
 #nowPlayingCenter {
   width: 40%;
@@ -111,7 +111,7 @@ body {
 }
 
 .playbackBar .progressBar {
-  margin-top: 4px;
+  margin-top: 6px;
 }
 .albumLink img {
   height: 100%;
@@ -140,6 +140,9 @@ body {
 }
 .volumeBar .progressBar {
   width: 125px;
+}
+.volumeBar .progressBar .progess {
+  margin-top: -2px;
 }
 #topContainer {
   min-height: 100%;
@@ -388,4 +391,15 @@ body {
 .noResult {
   margin: 15px;
   display: block;
+}
+.buttonItems .button {
+  display: block;
+  margin: 0 auto 50px auto;
+}
+.playlistsContainer {
+  padding: 15px 0;
+}
+.playlistImage {
+  border: 3px solid #282828;
+  padding: 10px;
 }

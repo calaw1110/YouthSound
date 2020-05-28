@@ -1,16 +1,16 @@
 <?php
-include("include/config.php");
+include "includes/config.php";
 //要先include Artist class 才能 include Album class
-include("include/classes/Artist.php"); //1
-include("include/classes/Album.php"); //2
-include("include/classes/Song.php"); //3
+include "includes/classes/Artist.php"; //1
+include "includes/classes/Album.php"; //2
+include "includes/classes/Song.php"; //3
 //session_destroy();LOG OUT
 //假如有登入狀態
 if (isset($_SESSION['userLoggedIn'])) {
     $userLoggedIn = $_SESSION['userLoggedIn'];
     echo "<script>userLoggedIn ='$userLoggedIn';</script>";
 } else {
-    header("Location: Account.php");
+    header("Location: account.php");
 }
 ?>
 <!DOCTYPE html>
@@ -32,7 +32,7 @@ if (isset($_SESSION['userLoggedIn'])) {
 
     <div id="mainContainer">
         <div id="topContainer">
-            <?php include("include/navBarContainer.php"); ?>
+            <?php include "includes/navBarContainer.php";?>
 
             <div id="mainViewContainer">
                 <div id="mainContent">

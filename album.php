@@ -1,4 +1,4 @@
-<?php include("include/includeFiles.php");
+<?php include("includes/includeFiles.php");
 
 if (isset($_GET['id'])) {
     $albumId = $_GET['id'];

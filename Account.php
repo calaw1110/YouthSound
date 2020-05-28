@@ -1,15 +1,15 @@
 <?php
-include "include/config.php";
-include "include/classes/Account.php";
-include "include/classes/Constants.php";
+include "includes/config.php";
+include "includes/classes/Account.php";
+include "includes/classes/Constants.php";
 $account = new Account($conn);
-include "include/handler/login_handler.php";
-include "include/handler/register_handler.php";
+include "includes/handlers/login_handler.php";
+include "includes/handlers/register_handler.php";
 function getInputValue($getValue)
 {
-  if (isset($_POST[$getValue])) {
-    echo $_POST[$getValue];
-  }
+    if (isset($_POST[$getValue])) {
+        echo $_POST[$getValue];
+    }
 }
 
 ?>
@@ -20,9 +20,9 @@ function getInputValue($getValue)
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-  <link rel="stylesheet" href="assets/css/Account.css" />
+  <link rel="stylesheet" href="assets/css/account.css" />
   <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.js'></script>
-  <script src="assets/js/Account.js"></script>
+  <script src="assets/js/account.js"></script>
 
   <title>MusicWeb</title>
 </head>
@@ -30,28 +30,28 @@ function getInputValue($getValue)
 <body id="background">
   <?php
 
-  if (isset($_POST['SignupBtn'])) {
+if (isset($_POST['SignupBtn'])) {
     echo '<script>
             $(document).ready(function() {
                 $("#loginForm").hide();
                 $("#registerForm").show();
             });
         </script>';
-  } else {
+} else {
     echo '<script>
             $(document).ready(function() {
                 $("#loginForm").show();
                 $("#registerForm").hide();
             });
         </script>';
-  }
+}
 
-  ?>
+?>
   <div id="">
     <div id="loginContainer">
       <div id="inputContainer">
         <!-- 登入表單 -->
-        <form action="Account.php" method="POST" id="loginForm">
+        <form action="account.php" method="POST" id="loginForm">
           <H2>Login to your account</H2>
           <p>
             <?php echo $account->getError(Constants::$loginFailed); ?>
@@ -71,13 +71,13 @@ function getInputValue($getValue)
         </form>
 
         <!-- 註冊表單 -->
-        <form id="registerForm" action="Account.php" method="POST">
+        <form id="registerForm" action="account.php" method="POST">
           <H2>Create your account</H2>
           <p>
             <?php echo $account->getError(Constants::$usernameNotLong); ?>
             <?php echo $account->getError(Constants::$usernameExists); ?>
             <label for="username">帳號</label>
-            <input type="text" id="username" name="username" value="<?php getInputValue('username') ?>" placeholder="請輸入帳號" required />
+            <input type="text" id="username" name="username" value="<?php getInputValue('username')?>" placeholder="請輸入帳號" required />
           </p>
 
           <p>
@@ -93,11 +93,11 @@ function getInputValue($getValue)
             <?php echo $account->getError(Constants::$emailInvalid); ?>
             <?php echo $account->getError(Constants::$emailExists); ?>
             <label for="useremail">信箱</label>
-            <input type="email" id="useremail" name="useremail" value="<?php getInputValue('useremail') ?>" placeholder="請輸入信箱" required>
+            <input type="email" id="useremail" name="useremail" value="<?php getInputValue('useremail')?>" placeholder="請輸入信箱" required>
           </p>
           <p>
             <label for="nickname">暱稱 </label>
-            <input type="text" name="nickname" id="nickname" placeholder="王小明" value="<?php getInputValue('nickname') ?>" required />
+            <input type="text" name="nickname" id="nickname" placeholder="王小明" value="<?php getInputValue('nickname')?>" required />
           </p>
           <button id="SignupBtn" type="submit" name="SignupBtn">
             Sign UP
