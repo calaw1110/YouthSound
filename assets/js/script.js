@@ -8,7 +8,7 @@ var repeat = false;//重複狀態
 var shuffle = false;//隨機狀態
 var userLoggedIn;//登入記錄
 var timer;//設定執行時間
-
+var playlistId;//記錄歌單id
 //
 function openPage(url){
     if(timer != null){
@@ -26,11 +26,9 @@ function openPage(url){
 }
 //建立歌單
 function createPlaylist(){
-    console.log(userLoggedIn);
     var promptTxt =prompt("請輸入歌單名稱");//顯示 可輸入 對話框
 
     if(promptTxt != null){
-
         $.post("includes/handlers/ajax/createPlaylist.php",{name:promptTxt, username:userLoggedIn}).done(function(error){
 
             if(error !=""){
@@ -41,6 +39,25 @@ function createPlaylist(){
                 openPage("yourMusic.php");
         })
     }
+}
+//刪除歌單 id=$playlistId
+function deletePlaylist(){
+    var prompt =confirm("確定要刪除它?");
+    if(prompt == true){
+        $.post("includes/handlers/ajax/deletePlaylist.php", {playlistId:playlistId}).done(function(error){
+            if (error != "") {
+                alert(error);
+                return;
+            }
+            // ajax 回傳成功則執行done()
+            openPage("yourMusic.php");
+        })
+    }
+
+}
+//
+function showOptionsMunu(button){
+    
 }
 
 //將傳入的時間 轉換格式
