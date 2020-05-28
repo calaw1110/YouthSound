@@ -1,9 +1,9 @@
-</div>
-</div>
-</div>
+                 </div>
+             </div>
+         </div>
 
-<?php include("includes/nowPlayingBarContainer.php"); ?>
-</div>
-</body>
+        <?php include "includes/nowPlayingBarContainer.php";?>
+        </div>
+    </body>
 
 </html>

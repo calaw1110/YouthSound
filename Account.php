@@ -24,7 +24,7 @@ function getInputValue($getValue)
   <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.js'></script>
   <script src="assets/js/account.js"></script>
 
-  <title>MusicWeb</title>
+  <title>YouthSound</title>
 </head>
 
 <body id="background">
