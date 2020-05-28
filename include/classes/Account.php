@@ -15,7 +15,7 @@ class Account
     public function login($un, $pw)
     {
         $pw = md5($pw);
-        $sql = "SELECT * FROM tmember WHERE mUsername ='$un' AND mPwd ='$pw'";
+        $sql = "SELECT * FROM members WHERE mUsername ='$un' AND mPwd ='$pw'";
         $result = mysqli_query($this->conn, $sql);
 
         if (mysqli_num_rows($result) == 1) {
@@ -50,7 +50,7 @@ class Account
         $profilePic = "assets/images/profile-pic/10444149-1.jpg";
         $date = date("Y-m-d");
         //sql 語法
-        $sql = "INSERT INTO tmember(mUsername,mPwd,mEmail,mSignUpDate,mProfilePic,mNickname) VALUES('$un','$encryptedpw','$email',' $date','$profilePic','$nickname')";
+        $sql = "INSERT INTO members(mUsername,mPwd,mEmail,mSignUpDate,mProfilePic,mNickname) VALUES('$un','$encryptedpw','$email',' $date','$profilePic','$nickname')";
         $result = mysqli_query($this->conn, $sql);
         return $result;
     }
@@ -70,7 +70,7 @@ class Account
             array_push($this->errorArray, Constants::$usernameNotLong);
         }
         //TODO: check  if username exists
-        $checkUsernameExistQuery = "SELECT mUsername FROM tmember WHERE mUsername='$username'";
+        $checkUsernameExistQuery = "SELECT mUsername FROM members WHERE mUsername='$username'";
         $result = mysqli_query($this->conn, $checkUsernameExistQuery);
         if (mysqli_num_rows($result) != 0) {
             array_push($this->errorArray, Constants::$usernameExists);
@@ -99,7 +99,7 @@ class Account
             return;
         }
         //TODO: check  if email exists
-        $checkemailExistQuery = "SELECT mEmail FROM tmember WHERE mEmail='$email'";
+        $checkemailExistQuery = "SELECT mEmail FROM members WHERE mEmail='$email'";
         $result = mysqli_query($this->conn, $checkemailExistQuery);
         // mysqli_num_rows 取得結果的回傳行數
         if (mysqli_num_rows($result) != 0) {

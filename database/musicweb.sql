@@ -1,4 +1,4 @@
-CREATE DATABASE musicweb CHARACTER set utf8mb4 collate utf8mb4_general_ci;
+CREATE DATABASE IF NOT EXISTS musicweb CHARACTER set utf8mb4 collate utf8mb4_general_ci;
 
 USE musicweb;
 
@@ -9,6 +9,73 @@ CREATE TABLE IF NOT EXISTS `albums` (
   `genre` int(11) NOT NULL,
   `artworkPath` varchar(500) NOT NULL
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 AUTO_INCREMENT=8 ;
+--
+-- Table structure for table `artists`
+--
+
+CREATE TABLE IF NOT EXISTS `artists` (
+`id` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  `name` varchar(50) NOT NULL
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 AUTO_INCREMENT=6 ;
+--
+-- Table structure for table `genres`
+--
+
+CREATE TABLE IF NOT EXISTS `genres` (
+`id` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  `name` varchar(50) NOT NULL
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 AUTO_INCREMENT=11 ;
+--
+-- Table structure for table `Songs`
+--
+
+CREATE TABLE IF NOT EXISTS `songs` (
+`id` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  `title` varchar(250) NOT NULL,
+  `artist` int(11) NOT NULL,
+  `album` int(11) NOT NULL,
+  `genre` int(11) NOT NULL,
+  `duration` varchar(8) NOT NULL,
+  `src` varchar(500) NOT NULL,
+  `albumOrder` int(11) NOT NULL,
+  `plays` int(11) NOT NULL
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 AUTO_INCREMENT=32 ;
+--
+-- 資料表結構 `members`
+--
+
+CREATE TABLE IF NOT EXISTS `members` (
+  `mID` int(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT COMMENT '會員編號',
+  `mUsername` varchar(50) NOT NULL COMMENT '會員帳號',
+  `mPwd` varchar(50) NOT NULL COMMENT '會員密碼',
+  `mEmail` varchar(50) NOT NULL COMMENT '會員信箱',
+  `mSignUpDate` date NOT NULL COMMENT '會員註冊日',
+  `mProfilePic` varchar(50) NOT NULL COMMENT '會員照片',
+  `mNickname` varchar(50) NOT NULL COMMENT '會員暱稱',
+  `mIntro` varchar(500) NOT NULL COMMENT '會員介紹'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- 資料表結構 `playlists`
+--
+
+CREATE TABLE IF NOT EXISTS `playlists` (
+  `id` int(11) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT ,
+  `name` varchar(50)  COMMENT '歌單名稱',
+  `owner` varchar(50)  COMMENT '擁有者',
+  `dateCreate` datetime  COMMENT '建立時間'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+
+
+TRUNCATE `artists`;
+TRUNCATE `albums`;
+TRUNCATE `genres`;
+TRUNCATE `songs`;
+TRUNCATE `members`;
+TRUNCATE `playlists`;
+
+
 
 --
 -- Dumping data for table `albums`
@@ -26,15 +93,6 @@ INSERT INTO `albums` ( `title`, `artist`, `genre`, `artworkPath`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `artists`
---
-
-CREATE TABLE IF NOT EXISTS `artists` (
-`id` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
-  `name` varchar(50) NOT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 AUTO_INCREMENT=6 ;
-
---
 -- Dumping data for table `artists`
 --
 
@@ -47,14 +105,6 @@ INSERT INTO `artists` ( `name`) VALUES
 
 -- --------------------------------------------------------
 
---
--- Table structure for table `genres`
---
-
-CREATE TABLE IF NOT EXISTS `genres` (
-`id` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
-  `name` varchar(50) NOT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 AUTO_INCREMENT=11 ;
 
 --
 -- Dumping data for table `genres`
@@ -74,21 +124,6 @@ INSERT INTO `genres` ( `name`) VALUES
 
 -- --------------------------------------------------------
 
---
--- Table structure for table `Songs`
---
-
-CREATE TABLE IF NOT EXISTS `Songs` (
-`id` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
-  `title` varchar(250) NOT NULL,
-  `artist` int(11) NOT NULL,
-  `album` int(11) NOT NULL,
-  `genre` int(11) NOT NULL,
-  `duration` varchar(8) NOT NULL,
-  `src` varchar(500) NOT NULL,
-  `albumOrder` int(11) NOT NULL,
-  `plays` int(11) NOT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 AUTO_INCREMENT=32 ;
 
 --
 -- Dumping data for table `Songs`
@@ -125,20 +160,3 @@ INSERT INTO `Songs` ( `title`, `artist`, `album`, `genre`, `duration`, `src`, `a
 ( 'The Lounge', 3, 3, 8, '4:16', 'assets/music/bensound-thelounge.mp3 ', 3, 0),
 ( 'Ukulele', 3, 3, 9, '2:26', 'assets/music/bensound-ukulele.mp3 ', 2, 0),
 ('Tomorrow', 3, 3, 1, '4:54', 'assets/music/bensound-tomorrow.mp3 ', 1, 0);
-
-
-
---
--- 資料表結構 `tmember`
---
-
-CREATE TABLE `tmember` (
-  `mID` int(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT COMMENT '會員編號',
-  `mUsername` varchar(50) NOT NULL COMMENT '會員帳號',
-  `mPwd` varchar(50) NOT NULL COMMENT '會員密碼',
-  `mEmail` varchar(50) NOT NULL COMMENT '會員信箱',
-  `mSignUpDate` date NOT NULL COMMENT '會員註冊日',
-  `mProfilePic` varchar(50) NOT NULL COMMENT '會員照片',
-  `mNickname` varchar(50) NOT NULL COMMENT '會員暱稱',
-  `mIntro` varchar(500) NOT NULL COMMENT '會員介紹'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
