@@ -55,3 +55,9 @@ $artist = $album->getAlbumArtist(); //回傳Album實作化
         </script>
     </ul>
 </div>
+<nav class="optionsMenu">
+    <input type="hidden"  class="songId">
+    <div class="item">加入歌單</div>
+    <div class="item">測試 2</div>
+    <div class="item">測試 3</div>
+</nav>
