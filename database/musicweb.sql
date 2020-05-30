@@ -65,6 +65,18 @@ CREATE TABLE IF NOT EXISTS `playlists` (
   `owner` varchar(50)  COMMENT '擁有者',
   `dateCreate` datetime  COMMENT '建立時間'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+-- --------------------------------------------------------
+
+--
+-- 資料表結構 `playlistsongs`
+--
+
+CREATE TABLE IF NOT EXISTS `playlistsongs` (
+  `id` int(11) NOT NULL,
+  `playlistId` int(11) NOT NULL,
+  `songId` int(11) NOT NULL,
+  `playlistOrder` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 
 
@@ -74,6 +86,7 @@ TRUNCATE `genres`;
 TRUNCATE `songs`;
 TRUNCATE `members`;
 TRUNCATE `playlists`;
+TRUNCATE `playlistsongs`;
 
 
 
@@ -160,3 +173,13 @@ INSERT INTO `Songs` ( `title`, `artist`, `album`, `genre`, `duration`, `src`, `a
 ( 'The Lounge', 3, 3, 8, '4:16', 'assets/music/bensound-thelounge.mp3 ', 3, 0),
 ( 'Ukulele', 3, 3, 9, '2:26', 'assets/music/bensound-ukulele.mp3 ', 2, 0),
 ('Tomorrow', 3, 3, 1, '4:54', 'assets/music/bensound-tomorrow.mp3 ', 1, 0);
+
+
+INSERT INTO `playlists`(`name`,`owner`,`dateCreate`)VALUES
+ ('test安安❤QＤＱ＃＠＄Ｔ$#%^%%$','calaw1110','2020-05-29'),
+ ('test安安❤QＤＱ＃＠＄Ｔ$#%^%%$','calaw1110','2020-05-30'),
+ ('test安安❤QＤＱ＃＠＄Ｔ$#%^%%$','calaw1110','2020-05-31')
+ 
+ INSERT INTO `playlistsongs`(`playlistId`,`songId`,`playlistOrder`)VALUES
+('1','15','1'),
+('1','25','2')
