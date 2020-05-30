@@ -9,7 +9,32 @@ var shuffle = false;//隨機狀態
 var userLoggedIn;//登入記錄
 var timer;//設定執行時間
 var playlistId;//記錄歌單id
-//
+
+
+$(document).click(function(click){
+    var target=$(click.target);
+
+    //hasClass("") 檢測元素是否有被分配到這個class
+    if(!target.hasClass("item")  &&  !target.hasClass("optionsBtn")){
+        hideOptionsMenu();
+    }
+})
+$(window).scroll(function(){
+    hideOptionsMenu();
+});
+//監聽select.playlist 是否有變化
+$(document).on("change","select.playlist",function(){
+    var playlistId =$(this).val();
+
+    //取得songId
+    // 做法:
+    //  由於是在歌曲資訊呼叫選單 選單元素會是在該歌曲的後一位 所以往前找指定的class 就可以取得songID
+    var songId=$(this).prev(".songId").val()
+
+    console.log("playlistId:"+ playlistId);
+    console.log("songId:"+ songId);
+})
+
 function openPage(url){
     if(timer != null){
         clearTimeout(timer);
@@ -56,8 +81,26 @@ function deletePlaylist(){
 
 }
 //
+function hideOptionsMenu() {
+    var menu=$(".optionsMenu");
+    if(menu.css("diplay") !="none"){
+        menu.css("display","none");
+    }
+}
+
+//按鈕觸發事件  顯示選單
 function showOptionsMunu(button){
-    
+    var songId= $(button).prevAll(".songId").val();
+    var menu=$('.optionsMenu');
+    var menuWidth=menu.width();//return width to calculate
+menu.find(".songId").val(songId);
+    var scrollTop =$(window).scrollTop();
+    var elementOffset =$(button).offset().top;//從上往下的偏移量
+
+    var top= elementOffset-scrollTop;
+    var left =$(button).position().left;
+
+    menu.css({"top":top+"px","left":left-menuWidth+"px","display":"inline"});
 }
 
 //將傳入的時間 轉換格式

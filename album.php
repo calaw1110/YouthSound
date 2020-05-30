@@ -37,7 +37,8 @@ $artist = $album->getAlbumArtist(); //回傳Album實作化
                                 <span class='artisName'>" . $albumArtist->getArtistName() . "</span>
                             </div>
                             <div class='trackOptions'>
-                                <img class='optionsBtn' src='assets/images/icons/more.png'>
+                                <input type='hidden' class='songId' value='" . $albumSong->getSongId() . "'>
+                                <img class='optionsBtn' src='assets/images/icons/more.png' onclick='showOptionsMunu(this)'>
                             </div>
                             <div class='trackDuration'>
                                 <span class='duration'>" . $albumSong->getSongDuration() . "</span>
@@ -56,8 +57,10 @@ $artist = $album->getAlbumArtist(); //回傳Album實作化
     </ul>
 </div>
 <nav class="optionsMenu">
-    <input type="hidden"  class="songId">
-    <div class="item">加入歌單</div>
+    <input type="hidden" class="songId">
+    <?php
+    echo Playlist::getPlaylistsDropdown($conn, $userLoggedIn->getUsername());
+    ?>
     <div class="item">測試 2</div>
     <div class="item">測試 3</div>
 </nav>

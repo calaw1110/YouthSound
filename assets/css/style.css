@@ -97,7 +97,7 @@ body {
 }
 /* 時間軸外觀 */
 .progressBarBg {
-  background-color: #404040;
+  background-color: rgba(0, 0, 0, 1);
   height: 4px;
   width: 100%;
   border-radius: 2px;
@@ -312,6 +312,7 @@ body {
   width: 5%;
   float: left;
   text-align: right;
+  cursor: pointer;
 }
 .tracklistRow .trackOptions img {
   width: 15px;
@@ -421,10 +422,20 @@ body {
   color: rgba(147, 147, 147, 0.8);
   cursor: pointer;
   height: 40px;
+  background-color: #282828;
+  font-size: 14px;
 }
 
 .optionsMenu .item:hover {
   color: #fff;
   background-color: #333;
   border-color: #333;
+}
+.optionsMenu select {
+  border: none;
+
+  /* 渲染成其他樣式 */
+  -webkit-appearance: none;
+  /* for firefox */
+  -moz-appearance: none;
 }
