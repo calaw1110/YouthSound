@@ -47,4 +47,18 @@ class Playlist
         }
         return $array;
     }
+
+    //static function
+    public static function getPlaylistsDropdown($conn, $username)
+    {
+        $dropdown = '<select class="item playlist" >
+                                 <option>選擇歌單</option>';
+        $playlistsQuery = mysqli_query($conn, "SELECT id,name FROM playlists WHERE owner='$username'");
+        while ($row = mysqli_fetch_array($playlistsQuery)) {
+            $id = $row['id'];
+            $name = $row['name'];
+            $dropdown = $dropdown . "<option value='$id'>$name</option>";
+        }
+        return $dropdown . "</select>";
+    }
 }
