@@ -439,3 +439,6 @@ body {
   /* for firefox */
   -moz-appearance: none;
 }
+.userInfo h1 {
+  text-align: center;
+}
