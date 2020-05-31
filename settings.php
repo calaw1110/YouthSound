@@ -1,5 +1,5 @@
 <?php
-include("includes/includeFiles.php");
+include "includes/includeFiles.php";
 ?>
 <div class="entityInfo">
     <div class="centerSection">
@@ -8,7 +8,7 @@ include("includes/includeFiles.php");
         </div>
     </div>
     <div class="buttonItems">
-        <button class="button" onclick="openPage('updateDetail.php')">修改資訊</button>
+        <button class="button" onclick="openPage('updateDetails.php')">修改資訊</button>
         <button class="button" onclick="logout()">登出</button>
     </div>
 </div>
