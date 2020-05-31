@@ -20,7 +20,12 @@ s<div id="navBarContainer">
         </div>
         <div class="group">
             <div class="navItem">
-                <span role='link' tabindex='0' onclick='openPage("profile.php")' class="navItemLink">Profile</span>
+                <span role='link' tabindex='0' onclick='openPage("settings.php")' class="navItemLink"><?php echo $userLoggedIn->getUsername(); ?></span>
+            </div>
+        </div>
+        <div class="group">
+            <div class="navItem">
+                <span role='link' tabindex='0' onclick='logout()' class="navItemLink">登出</span>
             </div>
         </div>
     </nav>

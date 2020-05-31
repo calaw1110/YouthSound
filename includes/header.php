@@ -4,11 +4,15 @@ include "includes/config.php";
 include "includes/classes/Artist.php"; //1
 include "includes/classes/Album.php"; //2
 include "includes/classes/Song.php"; //3
+include "includes/classes/User.php"; //4
+include "includes/classes/Playlist.php"; //5
+
 //session_destroy();LOG OUT
 //假如有登入狀態
 if (isset($_SESSION['userLoggedIn'])) {
-    $userLoggedIn = $_SESSION['userLoggedIn'];
-    echo "<script>userLoggedIn ='$userLoggedIn';</script>";
+    $userLoggedIn = new User($conn, $_SESSION['userLoggedIn']);
+    $username = $userLoggedIn->getUsername();
+    echo "<script>userLoggedIn ='$username';</script>";
 } else {
     header("Location: account.php");
 }
