@@ -39,25 +39,25 @@ if (isset($_GET['term'])) {
     <ul class="tracklist">
         <?php
 
-// 歌曲查詢
-$songsQuery = mysqli_query($conn, "SELECT id FROM songs WHERE title LIKE '$term%' LIMIT 10");
+        // 歌曲查詢
+        $songsQuery = mysqli_query($conn, "SELECT id FROM songs WHERE title LIKE '$term%' LIMIT 10");
 
-if (mysqli_num_rows($songsQuery) == 0) {
-    echo "<span class='noResults'>找不到歌曲跟  " . $term . "  符合</span>";
-}
+        if (mysqli_num_rows($songsQuery) == 0) {
+            echo "<span class='noResults'>找不到歌曲跟  " . $term . "  符合</span>";
+        }
 
-$songIdArray = array();
-$i = 1;
-while ($row = mysqli_fetch_array($songsQuery)) {
-    if ($i > 15) {
-        break;
-    }
+        $songIdArray = array();
+        $i = 1;
+        while ($row = mysqli_fetch_array($songsQuery)) {
+            if ($i > 15) {
+                break;
+            }
 
-    array_push($songIdArray, $row['id']);
+            array_push($songIdArray, $row['id']);
 
-    $albumSong = new Song($conn, $row['id']);
-    $albumArtist = $albumSong->getSongArtistId();
-    echo "<li class='tracklistRow'>
+            $albumSong = new Song($conn, $row['id']);
+            $albumArtist = $albumSong->getSongArtistId();
+            echo "<li class='tracklistRow'>
                             <div class='trackCount'>
                                 <img class='play' src='assets/images/icons/play-white.png'
                                 onclick='setTrack(\"" . $albumSong->getSongId() . "\",tempPlaylist,true)'>
@@ -68,16 +68,17 @@ while ($row = mysqli_fetch_array($songsQuery)) {
                                 <span class='artisName'>" . $albumArtist->getArtistName() . "</span>
                             </div>
                             <div class='trackOptions'>
-                                <img class='optionsBtn' src='assets/images/icons/more.png'>
+                                <input type='hidden' class='songId' value='" . $albumSong->getSongId() . "'>
+                                <img class='optionsBtn' src='assets/images/icons/more.png' onclick='showOptionsMunu(this)'>
                             </div>
                             <div class='trackDuration'>
                                 <span class='duration'>" . $albumSong->getSongDuration() . "</span>
                             </div>
 
                     </li>";
-    $i++;
-}
-?>
+            $i++;
+        }
+        ?>
         <script>
             //將songIdArray 回傳時使用json格式 並儲存在tempSongIds 裡面 -> 這張專輯所有的歌的ID
             var tempSongIds = '<?php echo json_encode($songIdArray) ?>'
@@ -90,42 +91,48 @@ while ($row = mysqli_fetch_array($songsQuery)) {
 <div class="artistContainer borderBottom">
     <h2>歌手</h2>
     <?php
-// 歌手查詢
-$artistsQuery = mysqli_query($conn, "SELECT id FROM artists WHERE name LIKE'$term%' LIMIT 10");
-//判斷回傳是否失敗 失敗會回傳false
-if (mysqli_num_rows($artistsQuery) == 0) {
-    echo "<span class='noResults'>找不到歌手跟  " . $term . "  符合</span>";
-}
-while ($row = mysqli_fetch_array($artistsQuery)) {
-    $artistsFound = new Artist($conn, $row['id']);
-    echo "<div class='searchResultRow'>
+    // 歌手查詢
+    $artistsQuery = mysqli_query($conn, "SELECT id FROM artists WHERE name LIKE'$term%' LIMIT 10");
+    //判斷回傳是否失敗 失敗會回傳false
+    if (mysqli_num_rows($artistsQuery) == 0) {
+        echo "<span class='noResults'>找不到歌手跟  " . $term . "  符合</span>";
+    }
+    while ($row = mysqli_fetch_array($artistsQuery)) {
+        $artistsFound = new Artist($conn, $row['id']);
+        echo "<div class='searchResultRow'>
                     <div class='artistName'>
                         <span role='link' tabindex='0'  onclick='openPage(\"artist.php?id=" . $artistsFound->getArtistId() . "\")'>"
-    . $artistsFound->getArtistName() .
-        "</span>
+            . $artistsFound->getArtistName() .
+            "</span>
                     </div>
                             </div>";
-}
+    }
 
-?>
+    ?>
 
 </div>
 <div class="gridViewContainer">
     <h2>專輯</h2>
     <?php
-$albumQuery = mysqli_query($conn, "SELECT * FROM albums WHERE title LIKE '$term%' LIMIT 10");
-if (mysqli_num_rows($albumQuery) == 0) {
-    echo "<span class='noResults'>找不到專輯跟  " . $term . "  符合</span>";
-}
+    $albumQuery = mysqli_query($conn, "SELECT * FROM albums WHERE title LIKE '$term%' LIMIT 10");
+    if (mysqli_num_rows($albumQuery) == 0) {
+        echo "<span class='noResults'>找不到專輯跟  " . $term . "  符合</span>";
+    }
 
-while ($row = mysqli_fetch_array($albumQuery)) {
-    echo "<div class='gridViewItem'>
+    while ($row = mysqli_fetch_array($albumQuery)) {
+        echo "<div class='gridViewItem'>
                                 <span role='link' tabindex='0' onclick='openPage(\"album.php?id=" . $row['id'] . " \")'>
                                     <img src='" . $row['artworkPath'] . "' alt=''>
                                     <div class='gridViewInfo'>" . $row['title'] . "
                                     </div>
                                 </span>
                             </div>";
-}
-?>
+    }
+    ?>
 </div>
+<nav class="optionsMenu">
+    <input type="hidden" class="songId">
+    <?php
+    echo Playlist::getPlaylistsDropdown($conn, $userLoggedIn->getUsername());
+    ?>
+</nav>

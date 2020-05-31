@@ -61,6 +61,4 @@ $artist = $album->getAlbumArtist(); //回傳Album實作化
     <?php
     echo Playlist::getPlaylistsDropdown($conn, $userLoggedIn->getUsername());
     ?>
-    <div class="item">測試 2</div>
-    <div class="item">測試 3</div>
 </nav>
