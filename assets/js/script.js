@@ -24,12 +24,13 @@ $(window).scroll(function(){
 });
 //監聽select.playlist 是否有變化
 $(document).on("change","select.playlist",function(){
-    var playlistId =$(this).val();
+    var select=$(this);
+    var playlistId =select.val();
 
     //取得songId
     // 做法:
     //  由於是在歌曲資訊呼叫選單 選單元素會是在該歌曲的後一位 所以往前找指定的class 就可以取得songID
-    var songId=$(this).prev(".songId").val()
+    var songId=select.prev(".songId").val()
     //取值測試
     // console.log("playlistId:"+ playlistId);
     // console.log("songId:"+ songId);
@@ -40,10 +41,15 @@ $(document).on("change","select.playlist",function(){
             return;
         }
         hideOptionsMenu();
-        $(this).val("");
+        select.val("");
     });
 })
+function logout() {
+    $.post("includes/handlers/ajax/logout.php",function(){
+        location.reload();
+    });
 
+}
 function openPage(url){
     if(timer != null){
         clearTimeout(timer);
@@ -58,6 +64,18 @@ function openPage(url){
     $("body").scrollTop(0);//垂直移動量
     history.pushState(null,null,url);
 }
+function removeFromPlaylist(button,playlist) {
+    var songId= $(button).prevAll(".songId").val();
+    $.post("includes/handlers/ajax/removeFromPlaylist.php", {playlistId:playlistId,songId:songId}).done(function(error){
+        if (error != "") {
+            alert(error);
+            return;
+        }
+        // ajax 回傳成功則執行done()
+        openPage("playlist.php?id="+playlistId);
+    });
+}
+
 //建立歌單
 function createPlaylist(){
     var promptTxt =prompt("請輸入歌單名稱");//顯示 可輸入 對話框
@@ -85,7 +103,7 @@ function deletePlaylist(){
             }
             // ajax 回傳成功則執行done()
             openPage("yourMusic.php");
-        })
+        });
     }
 
 }
