@@ -49,10 +49,10 @@ CREATE TABLE IF NOT EXISTS `members` (
   `mUsername` varchar(50) NOT NULL COMMENT '會員帳號',
   `mPwd` varchar(50) NOT NULL COMMENT '會員密碼',
   `mEmail` varchar(50) NOT NULL COMMENT '會員信箱',
-  `mSignUpDate` date NOT NULL COMMENT '會員註冊日',
-  `mProfilePic` varchar(50) NOT NULL COMMENT '會員照片',
+  `mSignUpDate` date  NULL COMMENT '會員註冊日',
+  `mProfilePic` varchar(50)  NULL COMMENT '會員照片',
   `mNickname` varchar(50) NOT NULL COMMENT '會員暱稱',
-  `mIntro` varchar(500) NOT NULL COMMENT '會員介紹'
+  `mIntro` varchar(500)  NULL COMMENT '會員介紹'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -175,11 +175,15 @@ INSERT INTO `Songs` ( `title`, `artist`, `album`, `genre`, `duration`, `src`, `a
 ('Tomorrow', 3, 3, 1, '4:54', 'assets/music/bensound-tomorrow.mp3 ', 1, 0);
 
 
+
+INSERT INTO `members`(`mUsername`,`mPwd`,`mEmail`,`mSignUpDate`,`mNickname`)VALUES
+ ('admintest',md5('admintest'),'admintest@admin.con',NOW(),'utf8mb4 teＳＴ ❤✧😀😀　');
+
 INSERT INTO `playlists`(`name`,`owner`,`dateCreate`)VALUES
- ('test安安❤QＤＱ＃＠＄Ｔ$#%^%%$','calaw1110','2020-05-29'),
- ('test安安❤QＤＱ＃＠＄Ｔ$#%^%%$','calaw1110','2020-05-30'),
- ('test安安❤QＤＱ＃＠＄Ｔ$#%^%%$','calaw1110','2020-05-31')
- 
+ ('utf8mb4 teＳＴ ❤✧😀😀　','admintest',NOW()),
+ ('utf8mb4 teＳＴ ❤✧😀😀❤✧😀😀　　','admintest',NOW()),
+ ('utf8mb4 teＳＴ ❤✧😀😀　❤✧😀😀　❤✧😀😀　','admintest',NOW());
+
  INSERT INTO `playlistsongs`(`playlistId`,`songId`,`playlistOrder`)VALUES
 ('1','15','1'),
-('1','25','2')
+('1','25','2');
