@@ -30,9 +30,18 @@ $(document).on("change","select.playlist",function(){
     // 做法:
     //  由於是在歌曲資訊呼叫選單 選單元素會是在該歌曲的後一位 所以往前找指定的class 就可以取得songID
     var songId=$(this).prev(".songId").val()
+    //取值測試
+    // console.log("playlistId:"+ playlistId);
+    // console.log("songId:"+ songId);
 
-    console.log("playlistId:"+ playlistId);
-    console.log("songId:"+ songId);
+    $.post("includes/handlers/ajax/addToPlaylist.php", { playlistId: playlistId,songId:songId}).done(function(error){
+        if (error != "") {
+            alert(error);
+            return;
+        }
+        hideOptionsMenu();
+        $(this).val("");
+    });
 })
 
 function openPage(url){
