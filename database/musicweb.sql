@@ -141,7 +141,7 @@ INSERT INTO `genres` ( `name`) VALUES
 --
 -- Dumping data for table `Songs`
 --
-INSERT INTO `Songs` ( `title`, `artist`, `album`, `genre`, `duration`, `src`, `albumOrder`, `plays`) VALUES
+INSERT INTO `songs` ( `title`, `artist`, `album`, `genre`, `duration`, `src`, `albumOrder`, `plays`) VALUES
 ( 'Acoustic Breeze', 1, 5, 8, '2:37', 'assets/music/bensound-acousticbreeze.mp3', 1, 0),
 ( 'A new beginning', 1, 5, 1, '2:35', 'assets/music/bensound-anewbeginning.mp3', 2, 0),
 ( 'Better Days', 1, 5, 2, '2:33', 'assets/music/bensound-betterdays.mp3', 3, 0),
