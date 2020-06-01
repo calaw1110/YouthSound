@@ -195,7 +195,7 @@ $jsonArray = json_encode($resultArray);
     }
 
     function setVolumeProgressBar(num) {
-        console.log(num)
+
         // 不會跟著音量變動或是禁音變動
         $(".volumeBar .progress").css("width", num * 100 + "%");
     }
@@ -242,8 +242,8 @@ $jsonArray = json_encode($resultArray);
             //回歸正常撥放順序
             currentIndex = currentPlaylist.indexOf(audioElement.currentlyPlaying.id);
         }
-        console.log(shufflePlaylist);
-        console.log(currentPlaylist);
+        // console.log(shufflePlaylist);
+        // console.log(currentPlaylist);
     }
 </script>
 <div id="nowPlayingBarContainer">

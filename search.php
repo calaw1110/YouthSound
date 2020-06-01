@@ -24,7 +24,7 @@ if (isset($_GET['term'])) {
                 //接input value
                 var val = $(".searchInput").val();
                 openPage("search.php?term=" + val);
-                console.log(val);
+
             }, 800)
         })
     })
