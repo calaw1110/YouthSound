@@ -72,7 +72,7 @@ CREATE TABLE IF NOT EXISTS `playlists` (
 --
 
 CREATE TABLE IF NOT EXISTS `playlistsongs` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
   `playlistId` int(11) NOT NULL,
   `songId` int(11) NOT NULL,
   `playlistOrder` int(11) NOT NULL
