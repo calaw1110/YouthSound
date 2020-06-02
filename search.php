@@ -40,7 +40,7 @@ if (isset($_GET['term'])) {
         <?php
 
         // 歌曲查詢
-        $songsQuery = mysqli_query($conn, "SELECT id FROM songs WHERE title LIKE '$term%' LIMIT 10");
+        $songsQuery = mysqli_query($conn, "SELECT id FROM songs WHERE title LIKE '%$term%' LIMIT 10");
 
         if (mysqli_num_rows($songsQuery) == 0) {
             echo "<span class='noResults'>找不到歌曲跟  " . $term . "  符合</span>";

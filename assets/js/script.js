@@ -106,7 +106,7 @@ function createPlaylist(){
             }
                 // ajax 回傳成功則執行done()
                 openPage("yourMusic.php");
-        })
+        });
     }
 }
 //刪除歌單 id=$playlistId
